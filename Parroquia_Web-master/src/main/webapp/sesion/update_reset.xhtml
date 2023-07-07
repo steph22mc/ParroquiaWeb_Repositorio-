@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:panelGroup styleClass="container-all">
+            <h:panelGroup styleClass="popup">
+                <h:panelGroup styleClass="img-good"></h:panelGroup>
+                <h:panelGroup styleClass="text">
+                    <h1>La contraseña se restableció correctamente.</h1>
+                    <p class="parrafo1">Intente iniciar sesión con su nueva contraseña</p>
+                    <div class="boton">
+                        <h:commandButton action="#{controlAcceso.redirigirAlLogin()}" />
+                    </div>
+                </h:panelGroup>
+                <h:commandLink action="#{controlAcceso.redirigirAlLogin()}" styleClass="close_btn" value="X" />
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:body>
+</html>
+

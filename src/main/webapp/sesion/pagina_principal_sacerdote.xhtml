@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <!-- Muestra el mensaje de bienvenida con el nombre de usuario obtenido -->
+        <h:outputText value="Bienvenido, #{controlAcceso.obtenerNombreUsuario()}" />
+
+        <header>
+            <!-- Logo -->
+            <a class="logo">
+                <img src=""/>
+                <span>MyChurch</span>
+            </a>
+
+            <ul class="navbar">
+                <!-- Formulario y panelGroup para agrupar los enlaces -->
+                <h:form>
+                    <h:panelGroup>
+                        <!-- Enlace para redirigir a la página de "Feligreses" -->
+                        <li>
+                            <h:commandLink value="Feligreses" action="#{gestionPersonas.redirigirAPersona()}" target="myframe"/>
+                        </li>
+                    </h:panelGroup>
+
+                    <!-- Enlace para redirigir a la página de "Sacerdotes" -->
+                    <li>
+                        <h:commandLink value="Sacerdotes" action="#{gestionPersonas.redirigirASacerdote()}" target="myframe" />
+                    </li>
+
+                    <!-- Enlace para redirigir a la página de "Direccion" -->
+                    <li>
+                        <h:commandLink value="Direccion" action="#{direccionBean.redirigirADireccion()}" target="myframe" />
+                    </li>
+
+                    <!-- Enlace para redirigir a la página de "Usuarios" -->
+                    <li>
+                        <h:commandLink value="Usuarios" action="#{gestionUsuario.redirigirAUsuario()}" target="myframe"/>
+                    </li>
+                </h:form>
+
+                <!-- Dropdown con enlaces de sacramentos -->
+                <div class="dropdown">
+                    <div class="select">
+                        <span class="selected">Sacramentos</span>
+                        <div class="caret"></div>
+                    </div>
+                    <ul class="menu">
+                        <h:form>
+                            <!-- Enlaces para redirigir a diferentes páginas de sacramentos -->
+                            <li><h:commandLink value="Bautizo" action="#{controlSacramento.redirigirABautizo()}" target="myframe"/></li>
+                            <li><h:commandLink value="Comunion" action="#{controlSacramento.redirigirAComunion()}" target="myframe"/></li>
+                            <li><h:commandLink value="Confirmacion" action="#{controlSacramento.redirigirAConfirmacion()}" target="myframe"/></li>
+                            <li><h:commandLink value="Boda" action="#{controlSacramento.redirigirABoda()}" target="myframe"/></li>
+                            <li><h:commandLink value="Defuncion" action="#{controlSacramento.redirigirADefuncion()}" target="myframe"/></li>
+                        </h:form>
+                    </ul>
+                </div>
+            </ul>
+        </header>
+
+        <section class="contenedor" id="contenedor">
+            <div id="iframe_content">
+                <!-- IFrame para mostrar el contenido -->
+                <iframe  id="myframe" style="height:500px; width: 100%; border: none" name="myframe" frameborder="0" scrolling="auto" src="#{controlSacramento.iframeSrc}">
+                    <p>Your browser does not support iframes.</p>
+                </iframe>
+            </div>
+        </section>
+
+        <h:form id="logoutForm" prependId="false">
+            <!-- Botón para cerrar sesión -->
+            <h:commandButton value='Cerrar sesión' type="submit" action="#{controlAcceso.cerrarSesion()}"/>
+        </h:form>
+    </h:body>
+
+</html>
+

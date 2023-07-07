@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Registro de Bautizo</title>
+        <link rel="stylesheet" href="css/pdf.css"></link>
+        <h:outputStylesheet library="css" name="pdf.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <h1>Registro de Bautizo</h1>
+
+            <h:outputLabel value="Cantidad de registros: #{controlBautizo.registros.size()}" />
+
+            <h:inputText value="#{controlBautizo.busqueda}" disabled="#{controlBautizo.mostrandoTabla}" rendered="#{controlBautizo.estado eq 'buscando'}" />
+            <h:commandButton value="Buscar" action="#{controlBautizo.buscar}" disabled="#{controlBautizo.mostrandoTabla}" rendered="#{controlBautizo.estado eq 'buscando'}" />
+            <p:commandButton action="#{controlBautizo.redirigirEditar()}" value="Crear Bautizo" />
+            <br/><br/>
+
+            <p:dataTable value="#{controlBautizo.registros}" var="bautizo" rendered="#{controlBautizo.mostrandoTabla}">
+                <p:column headerText="Id">#{bautizo.idBautizo}</p:column>
+                <p:column headerText="Cedula del Bautizado">#{bautizo.cedulaPersona}</p:column>
+                <p:column headerText="Bautizado">#{bautizo.persona}</p:column>
+                <p:column headerText="Fecha">#{bautizo.fechaBautizo}</p:column>
+                <p:column headerText="Parroquia">#{bautizo.nombreParroquia}</p:column>
+                <p:column headerText="Direccion">#{bautizo.direccion}</p:column>
+                <p:column headerText="Madrina">#{bautizo.madrina}</p:column>
+                <p:column headerText="Padrino">#{bautizo.padrino}</p:column>
+                <p:column headerText="Sacerdote">#{bautizo.sacerdote}</p:column>
+                <p:column>
+                    <h:commandButton value="Actualizar" action="#{controlBautizo.actualizar(bautizo)}" />
+                    <!-- Botón "Ver" que abre el modal -->
+                    <a href="#" onclick="mostrarPopup('#{bautizo.idBautizo}', '#{bautizo.fechaBautizo}', '#{bautizo.nombreParroquia}', '#{bautizo.direccion}', '#{bautizo.madrina}', '#{bautizo.padrino}', '#{bautizo.cedulaPersona}', '#{bautizo.persona}', '#{bautizo.sacerdote}'); return false;">Ver</a>
+                </p:column>
+            </p:dataTable>
+
+            <h:commandButton value="Retroceder" action="#{controlBautizo.retroceder}" rendered="#{controlBautizo.mostrandoTabla}" />
+            
+        </h:form>
+        
+        <div id="popup" class="popup">
+            <h2>Detalles del Bautizo</h2>
+            <p>Id: <span id="idBautizo"></span></p>
+            <p>Cedula del Bautizado: <span id="cedulaPersona"></span></p>
+            <p>Bautizado: <span id="bautizado"></span></p>
+            <p>Fecha: <span id="fecha"></span></p>
+            <p>Parroquia: <span id="parroquia"></span></p>
+            <p>Direccion: <span id="direccion"></span></p>
+            <p>Madrina: <span id="madrina"></span></p>
+            <p>Padrino: <span id="padrino"></span></p>
+            <p>Sacerdote: <span id="sacerdote"></span></p>
+
+            <button onclick="imprimirCertificado()">Imprimir</button>
+            <button onclick="generarPDF(); return false;">Descargar PDF</button>
+            <button onclick="cerrarPopup()">Cancelar</button>
+        </div>
+
+        <div id="overlay" class="overlay"></div>
+
+        <script>
+            function mostrarPopup(idBautizo, fecha, parroquia, direccion, madrina, padrino, cedulaPersona, bautizado, sacerdote) {
+                document.getElementById("idBautizo").textContent = idBautizo;
+                document.getElementById("fecha").textContent = fecha;
+                document.getElementById("parroquia").textContent = parroquia;
+                document.getElementById("direccion").textContent = direccion;
+                document.getElementById("madrina").textContent = madrina;
+                document.getElementById("padrino").textContent = padrino;
+                document.getElementById("cedulaPersona").textContent = cedulaPersona;
+                document.getElementById("bautizado").textContent = bautizado;
+                document.getElementById("sacerdote").textContent = sacerdote;
+
+                document.getElementById("popup").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
+            }
+
+            function cerrarPopup() {
+                document.getElementById("popup").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+            }
+
+            function generarPDF() {
+                var idBautizo = document.getElementById("idBautizo").textContent;
+                var fecha = document.getElementById("fecha").textContent;
+                var parroquia = document.getElementById("parroquia").textContent;
+                var direccion = document.getElementById("direccion").textContent;
+                var madrina = document.getElementById("madrina").textContent;
+                var padrino = document.getElementById("padrino").textContent;
+                var cedulaPersona = document.getElementById("cedulaPersona").textContent;
+                var bautizado = document.getElementById("bautizado").textContent;
+                var sacerdote = document.getElementById("sacerdote").textContent;
+
+                // Construir el contenido del certificado en formato HTML
+                var contenido =
+                        `<div class="certificado-container">
+                  <h2 class="certificado-title">Certificado de Bautismo</h2>
+                  <div class="certificado-content">
+                    <p>Certificamos que <b>` +bautizado + `</b>ha sido bautizado en agua, en cumplimiento del mandato de nuestro señor Jesucristo.</p>
+                    <p>"Por tanto id y haced discípulos a todas las naciones bautizándolos en el nombre del Padre, del Hijo y del Espíritu Santo" Mateo 28:19.</p>
+                    <p>Dando así testimonio público de que renuncia a la vida antigua y afirma su fe en las enseñanzas de las Sagradas Escrituras.</p>
+                    <p>Expedido en <b>`+ parroquia +`</b> en <b>` + direccion + `</b> el <b>` + fecha +`</b>.</p>
+                    <p></p>
+                    <p>Madrina: <b>`+madrina+`</b></p>
+                    <p>Padrino: <b>` +padrino+`</b></p>
+                    <p>Sacerdote: <b>`+sacerdote+`</b></p>
+                  </div>
+                </div>`;
+
+                // Crear un elemento HTML temporal para convertir a PDF
+                var tempElement = document.createElement("div");
+                tempElement.innerHTML = contenido;
+
+                // Opciones de configuración para html2pdf
+                var options = {
+                    margin: [20, 20],
+                    filename: "certificado_bautismo.pdf",
+                    image: { type: "jpeg", quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { format: "a4", orientation: "landscape" }
+                };
+
+                // Generar el PDF utilizando html2pdf
+                html2pdf().set(options).from(tempElement).save();
+            }
+
+
+        </script>
+    </h:body>
+</html>
+

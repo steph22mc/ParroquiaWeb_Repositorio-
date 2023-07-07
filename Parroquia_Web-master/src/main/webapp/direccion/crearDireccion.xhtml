@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:form>
+        <h:outputLabel for="nombreLugar" value="Nombre Lugar:" />
+        <p:inputText id="nombreLugar" value="#{direccionBean.nuevoNombreLugar}" required="true" />
+        <h:message for="nombreLugar" />
+
+        <h:outputLabel for="provincia" value="Provincia:" />
+        <p:inputText id="provincia" value="#{direccionBean.nuevaProvincia}" required="true" />
+        <h:message for="provincia" />
+
+        <h:outputLabel for="distrito" value="Distrito:" />
+        <p:inputText id="distrito" value="#{direccionBean.nuevoDistrito}" required="true" />
+        <h:message for="distrito" />
+
+        <p:commandButton value="Guardar" action="#{direccionBean.crearDireccion()}" />
+        <p:commandButton type="reset" value="Reset" />
+    </h:form>
+
+</html>
+
