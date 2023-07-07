@@ -104,4 +104,45 @@ public class ParroquiaDao {
         }
         return null;
     }
+    
+    public List<Parroquia> buscarParroquia(String searchText) throws SQLException{
+        List<Parroquia> parroquiasFiltradas = new ArrayList<>();
+        
+        String query = "SELECT * FROM V_Parroquia WHERE Nombre_Parroquia LIKE ?";
+        
+        try(PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Parroquia parroquia = new Parroquia();
+                    parroquia.setIdParroquia(resultSet.getInt("Id_Parroquia"));
+                    parroquia.setIdDireccion(resultSet.getInt("Id_Direccion"));
+                    parroquia.setNombreParroquia(resultSet.getString("Nombre_Parroquia"));
+                    parroquia.setDireccion(resultSet.getString("Direccion"));
+                    
+                    parroquiasFiltradas.add(parroquia);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return parroquiasFiltradas;
+        }
+        
+    }
+    
+    public int obtenerIdParroquiaPorNombre(String nombreParroquia) throws SQLException{
+        String query = "SELECT Id_Parroquia FROM V_Parroquia WHERE Nombre_Parroquia = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setString(1, nombreParroquia);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                if(resultSet.next()){
+                    return resultSet.getInt("Id_Parroquia");
+                }
+            }
+        }
+        return -1;
+    }
 }

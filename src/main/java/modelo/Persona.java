@@ -5,13 +5,15 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
  * @author DELL
  */
-public class Persona {
+public class Persona implements Serializable, Comparable<Persona>{
     private String cedulaPersona;
     private String nombre;
     private String primerNombre;
@@ -128,5 +130,42 @@ public class Persona {
     public void setId_Direccion(int id_Direccion) {
         this.id_Direccion = id_Direccion;
     }
+    
+    /**
+     * Compara si la instancia actual es igual al objeto proporcionado.
+     *
+     * @param obj el objeto a comparar
+     * @return true si son iguales, false de lo contrario
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Persona other = (Persona) obj;
+        return cedulaPersona == other.cedulaPersona && Objects.equals(nombre, other.nombre);
+    }
 
+    /**
+     * Genera el código hash para la instancia actual.
+     *
+     * @return el código hash generado
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre);
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
+    @Override
+    public int compareTo(Persona o) {
+        return nombre.compareTo(o.nombre);
+    }
 }

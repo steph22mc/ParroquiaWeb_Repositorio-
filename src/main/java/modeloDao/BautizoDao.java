@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Bautizo;
@@ -64,7 +65,10 @@ public class BautizoDao {
     public void insert(Bautizo bautizo) {
         String query = "CALL InsertarBautizo(?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setDate(1, (Date) bautizo.getFechaBautizo());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaStr = sdf.format(bautizo.getFechaBautizo());
+            statement.setString(1, fechaStr);
+            
             statement.setInt(2, bautizo.getIdParroquia());
             statement.setInt(3, bautizo.getIdDireccion());
             statement.setString(4, bautizo.getIdMadrina());
@@ -78,17 +82,26 @@ public class BautizoDao {
     }
 
     public int update(Bautizo bautizo) {
-        String query = "CALL ActualizarBautizo(?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "SELECT ActualizarBautizo(?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, bautizo.getIdBautizo());
-            statement.setDate(2, (Date) bautizo.getFechaBautizo());
+            
+            // Convertir la fecha util.Date a sql.Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaStr = sdf.format(bautizo.getFechaBautizo());
+            
+            statement.setString(2, fechaStr);
             statement.setInt(3, bautizo.getIdParroquia());
             statement.setInt(4, bautizo.getIdDireccion());
             statement.setString(5, bautizo.getIdMadrina());
             statement.setString(6, bautizo.getIdPadrino());
             statement.setString(7, bautizo.getCedulaPersona());
             statement.setInt(8, bautizo.getIdSacerdote());
-            return statement.executeUpdate();
+            
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

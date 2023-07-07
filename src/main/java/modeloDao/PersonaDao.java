@@ -123,72 +123,155 @@ public class PersonaDao {
     }
     
     public List<Persona> buscarPersonas(String searchText) throws SQLException, ClassNotFoundException {
-    List<Persona> personasFiltradas = new ArrayList<>();
+        List<Persona> personasFiltradas = new ArrayList<>();
 
-    String query = "SELECT p.Cedula_Persona, np.Nombre, p.Genero, p.Fecha_Nacimiento, p.Telefono, p.Id_Direccion, d.Direccion " +
-                   "FROM TB_Persona p " +
-                   "INNER JOIN V_Nombre_Persona np ON p.Cedula_Persona = np.Cedula_Persona " +
-                   "INNER JOIN V_Direccion d ON p.Id_Direccion = d.Id_Direccion " +
-                   "WHERE p.Cedula_Persona LIKE ? OR np.Nombre LIKE ? OR p.Genero LIKE ? OR p.Fecha_Nacimiento LIKE ? OR p.Telefono LIKE ? OR d.Direccion LIKE ? ";
+        String query = "SELECT p.Cedula_Persona, np.Nombre, p.Genero, p.Fecha_Nacimiento, p.Telefono, p.Id_Direccion, d.Direccion " +
+                       "FROM TB_Persona p " +
+                       "INNER JOIN V_Nombre_Persona np ON p.Cedula_Persona = np.Cedula_Persona " +
+                       "INNER JOIN V_Direccion d ON p.Id_Direccion = d.Id_Direccion " +
+                       "WHERE p.Cedula_Persona LIKE ? OR np.Nombre LIKE ? OR p.Genero LIKE ? OR p.Fecha_Nacimiento LIKE ? OR p.Telefono LIKE ? OR d.Direccion LIKE ? ";
 
-    try (PreparedStatement statement = connection.prepareStatement(query)) {
-        String searchTerm = "%" + searchText + "%";
-        for (int i = 1; i <= 6; i++) {
-            statement.setString(i, searchTerm);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            String searchTerm = "%" + searchText + "%";
+            for (int i = 1; i <= 6; i++) {
+                statement.setString(i, searchTerm);
+            }
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    persona.setGenero(resultSet.getString("Genero"));
+                    persona.setFechaNacimiento(resultSet.getDate("Fecha_Nacimiento"));
+                    persona.setTelefono(resultSet.getString("Telefono"));
+                    persona.setId_Direccion(resultSet.getInt("Id_Direccion"));
+                    persona.setDireccion(resultSet.getString("Direccion"));
+
+                    personasFiltradas.add(persona);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        try (ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
+        return personasFiltradas;
+    }
+    
+    public Persona getByCedula(String cedula) {
+        String query = "SELECT p.*, d.Direccion " +
+                       "FROM TB_Persona p " +
+                       "INNER JOIN V_Direccion d ON p.Id_Direccion = d.Id_Direccion " + 
+                       "WHERE p.Cedula_Persona = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, cedula);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
                 Persona persona = new Persona();
                 persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
-                persona.setNombre(resultSet.getString("Nombre"));
+                persona.setPrimerNombre(resultSet.getString("Primer_Nombre"));
+                persona.setSegundoNombre(resultSet.getString("Segundo_Nombre"));
+                persona.setPrimerApellido(resultSet.getString("Primer_Apellido"));
+                persona.setSegundoApellido(resultSet.getString("Segundo_Apellido"));
                 persona.setGenero(resultSet.getString("Genero"));
                 persona.setFechaNacimiento(resultSet.getDate("Fecha_Nacimiento"));
                 persona.setTelefono(resultSet.getString("Telefono"));
                 persona.setId_Direccion(resultSet.getInt("Id_Direccion"));
                 persona.setDireccion(resultSet.getString("Direccion"));
 
-                personasFiltradas.add(persona);
+                return persona;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return null;
     }
-
-    return personasFiltradas;
-}
     
-    public Persona getByCedula(String cedula) {
-    String query = "SELECT p.*, d.Direccion " +
-                   "FROM TB_Persona p " +
-                   "INNER JOIN V_Direccion d ON p.Id_Direccion = d.Id_Direccion " + 
-                   "WHERE p.Cedula_Persona = ?";
-    try (PreparedStatement statement = connection.prepareStatement(query)) {
-        statement.setString(1, cedula);
-        ResultSet resultSet = statement.executeQuery();
-        
-        if (resultSet.next()) {
-            Persona persona = new Persona();
-            persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
-            persona.setPrimerNombre(resultSet.getString("Primer_Nombre"));
-            persona.setSegundoNombre(resultSet.getString("Segundo_Nombre"));
-            persona.setPrimerApellido(resultSet.getString("Primer_Apellido"));
-            persona.setSegundoApellido(resultSet.getString("Segundo_Apellido"));
-            persona.setGenero(resultSet.getString("Genero"));
-            persona.setFechaNacimiento(resultSet.getDate("Fecha_Nacimiento"));
-            persona.setTelefono(resultSet.getString("Telefono"));
-            persona.setId_Direccion(resultSet.getInt("Id_Direccion"));
-            persona.setDireccion(resultSet.getString("Direccion"));
+
+    
+    public List<Persona> buscarMujeres(String searchText) throws SQLException, ClassNotFoundException {
+        List<Persona> personasFiltradas = new ArrayList<>();
+
+        String query = "SELECT p.Cedula_Persona, np.Nombre, p.Genero, p.Fecha_Nacimiento, p.Telefono, p.Id_Direccion, d.Direccion " +
+                       "FROM TB_Persona p " +
+                       "INNER JOIN V_Nombre_Persona np ON p.Cedula_Persona = np.Cedula_Persona " +
+                       "INNER JOIN V_Direccion d ON p.Id_Direccion = d.Id_Direccion " +
+                       "WHERE np.Nombre LIKE ? AND p.Genero = 'Femenino' ";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            String searchTerm = "%" + searchText + "%";
             
-            return persona;
+            statement.setString(1, searchTerm);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    persona.setGenero(resultSet.getString("Genero"));
+                    persona.setFechaNacimiento(resultSet.getDate("Fecha_Nacimiento"));
+                    persona.setTelefono(resultSet.getString("Telefono"));
+                    persona.setId_Direccion(resultSet.getInt("Id_Direccion"));
+                    persona.setDireccion(resultSet.getString("Direccion"));
+
+                    personasFiltradas.add(persona);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return personasFiltradas;
     }
-    return null;
-}
+    
+    public List<Persona> buscarHombres(String searchText) throws SQLException, ClassNotFoundException {
+        List<Persona> personasFiltradas = new ArrayList<>();
 
+        String query = "SELECT p.Cedula_Persona, np.Nombre, p.Genero, p.Fecha_Nacimiento, p.Telefono, p.Id_Direccion, d.Direccion " +
+                       "FROM TB_Persona p " +
+                       "INNER JOIN V_Nombre_Persona np ON p.Cedula_Persona = np.Cedula_Persona " +
+                       "INNER JOIN V_Direccion d ON p.Id_Direccion = d.Id_Direccion " +
+                       "WHERE np.Nombre LIKE ? AND p.Genero = 'Masculino' ";
 
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            String searchTerm = "%" + searchText + "%";
+            
+            statement.setString(1, searchTerm);
 
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    persona.setGenero(resultSet.getString("Genero"));
+                    persona.setFechaNacimiento(resultSet.getDate("Fecha_Nacimiento"));
+                    persona.setTelefono(resultSet.getString("Telefono"));
+                    persona.setId_Direccion(resultSet.getInt("Id_Direccion"));
+                    persona.setDireccion(resultSet.getString("Direccion"));
+
+                    personasFiltradas.add(persona);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return personasFiltradas;
+    }
+    
+        public String obtenerCedulaPorNombre(String nombre) throws SQLException{
+            String query = "SELECT Cedula_Persona FROM v_nombre_persona WHERE Nombre = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)){
+                statement.setString(1, nombre);
+
+                try (ResultSet resultSet = statement.executeQuery()){
+                    if(resultSet.next()){
+                        return resultSet.getString("Cedula_Persona");
+                    }
+                }
+            }
+            return null;
+        }
 
 }

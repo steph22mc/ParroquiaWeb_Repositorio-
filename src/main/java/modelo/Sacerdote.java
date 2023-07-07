@@ -5,16 +5,20 @@
  */
 package modelo;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  *
  * @author DELL
  */
-public class Sacerdote {
+public class Sacerdote implements Serializable, Comparable<Sacerdote>{
     private int idSacerdote;
     private String rango;
     private String cedulaPersona;
     private String primerNombre;
     private String primerApellido;
+    private String sacerdote;
 
     public Sacerdote() {
     }
@@ -63,6 +67,44 @@ public class Sacerdote {
     public void setPrimerApellido(String primerApellido) {
         this.primerApellido = primerApellido;
     }
+
+    public String getSacerdote() {
+        return sacerdote;
+    }
+
+    public void setSacerdote(String sacerdote) {
+        this.sacerdote = sacerdote;
+    }
     
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Sacerdote other = (Sacerdote) obj;
+        return idSacerdote == other.idSacerdote && Objects.equals(sacerdote, other.sacerdote);
+    }
+
+    /**
+     * Genera el código hash para la instancia actual.
+     *
+     * @return el código hash generado
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(sacerdote);
+    }
+
+    @Override
+    public String toString() {
+        return sacerdote;
+    }
+
+    @Override
+    public int compareTo(Sacerdote o) {
+        return sacerdote.compareTo(o.sacerdote);
+    }
 }
