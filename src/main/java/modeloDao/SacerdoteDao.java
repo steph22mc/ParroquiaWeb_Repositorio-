@@ -29,24 +29,29 @@ public class SacerdoteDao {
         }
     }
 
-    public void insertarSacerdote(String rango, String cedulaPersona) {
+    public void insertarSacerdote(Sacerdote sacerdote) {
         String query = "CALL InsertarSacerdote(?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, rango);
-            statement.setString(2, cedulaPersona);
+            statement.setString(1, sacerdote.getRango());
+            statement.setString(2, sacerdote.getCedulaPersona());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void actualizarSacerdote(int idSacerdote, String rango, String cedulaPersona) {
-        String query = "SELECT ActualizarSacerdote(?, ?, ?)";
+    public void actualizarSacerdote(Sacerdote sacerdote) {
+        String query = "SELECT ActualizarSacerdote(?, ?, ?) AS result";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, idSacerdote);
-            statement.setString(2, rango);
-            statement.setString(3, cedulaPersona);
-            statement.execute();
+            statement.setInt(1, sacerdote.getIdSacerdote());
+            statement.setString(2, sacerdote.getRango());
+            statement.setString(3, sacerdote.getCedulaPersona());
+            ResultSet resultSet = statement.executeQuery();
+            
+            if (resultSet.next()) {
+                int rowsAffected = resultSet.getInt("result");
+                // Verificar el número de filas afectadas y realizar las acciones necesarias
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -126,5 +131,33 @@ public class SacerdoteDao {
             }
         }
         return -1;
+    }
+    
+    public Sacerdote getById(int idSacerdote){
+        String query = "SELECT * FROM Vista_Sacerdotes WHERE Id_Sacerdote = ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setInt(1, idSacerdote);
+            
+            ResultSet resultSet = statement.executeQuery();
+            
+            if(resultSet.next()){
+                Sacerdote sacerdote = new Sacerdote();
+                sacerdote.setIdSacerdote(resultSet.getInt("Id_Sacerdote"));
+                sacerdote.setSacerdote(resultSet.getString("Sacerdote"));
+                sacerdote.setPrimerNombre(resultSet.getString("Primer_Nombre"));
+                sacerdote.setPrimerApellido(resultSet.getString("Primer_Apellido"));
+                sacerdote.setRango(resultSet.getString("Rango"));
+                
+                sacerdote.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+
+
+                
+                return sacerdote;
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

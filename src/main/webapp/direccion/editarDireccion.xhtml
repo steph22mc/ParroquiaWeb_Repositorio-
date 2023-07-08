@@ -8,28 +8,28 @@
     </h:head>
     <h:body>
         <f:metadata>
-        <f:viewParam name="id" value="#{direccionBean.idDireccion}" />
-        <f:event listener="#{direccionBean.cargarDireccion()}" type="preRenderView" />
-    </f:metadata>
+            <f:viewParam name="id" value="#{direccionBean.idDireccion}" />
+            <f:event listener="#{direccionBean.cargarDireccion()}" type="preRenderView" />
+        </f:metadata>
 
-    <h:form>
-        <h:panelGrid columns="2">
-            <h:outputLabel for="nombreLugar" value="Nombre del Lugar:" />
-            <h:inputText id="nombreLugar" value="#{direccionBean.direccion.nombreLugar}" required="true" />
-            <h:message for="nombreLugar" />
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="nombreLugar" value="Nombre del Lugar:" />
+                <h:inputText id="nombreLugar" value="#{direccionBean.direccion.nombreLugar}" required="true" />
+                <h:message for="nombreLugar" />
 
-            <h:outputLabel for="provincia" value="Provincia:" />
-            <h:inputText id="provincia" value="#{direccionBean.direccion.provincia}" required="true" />
-            <h:message for="provincia" />
+                <h:outputLabel for="provincia" value="Provincia:" />
+                <h:inputText id="provincia" value="#{direccionBean.direccion.provincia}" required="true" />
+                <h:message for="provincia" />
 
-            <h:outputLabel for="distrito" value="Distrito:" />
-            <h:inputText id="distrito" value="#{direccionBean.direccion.distrito}" required="true" />
-            <h:message for="distrito" />
-        </h:panelGrid>
+                <h:outputLabel for="distrito" value="Distrito:" />
+                <h:inputText id="distrito" value="#{direccionBean.direccion.distrito}" required="true" />
+                <h:message for="distrito" />
+            </h:panelGrid>
 
-        <h:commandButton value="Actualizar" action="#{direccionBean.actualizarDireccion()}" />
-        <h:commandLink value="Cancelar" action="#{direccionBean.redirigirADireccion()}" immediate="true"/>
-    </h:form>
+            <h:commandButton value="Actualizar" action="#{direccionBean.actualizarDireccion()}" />
+            <h:commandLink value="Cancelar" action="#{direccionBean.redirigirADireccion()}" immediate="true"/>
+        </h:form>
     </h:body>
 </html>
 

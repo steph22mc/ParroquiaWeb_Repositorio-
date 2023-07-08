@@ -6,6 +6,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +32,7 @@ import modeloDao.SacerdoteDao;
  */
 @ManagedBean
 @ViewScoped
-public class ControlBautizo {
+public class ControlBautizo implements Serializable{
     
     private String busqueda;
     private List<Bautizo> registros;

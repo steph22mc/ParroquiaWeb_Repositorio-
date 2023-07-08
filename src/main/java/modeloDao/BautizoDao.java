@@ -82,7 +82,7 @@ public class BautizoDao {
     }
 
     public int update(Bautizo bautizo) {
-        String query = "SELECT ActualizarBautizo(?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "SELECT ActualizarBautizo(?, ?, ?, ?, ?, ?, ?, ?) AS result";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, bautizo.getIdBautizo());
             

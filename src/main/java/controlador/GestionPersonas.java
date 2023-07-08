@@ -256,18 +256,18 @@ public class GestionPersonas implements Serializable {
 
     public boolean isSacerdoteTrue() throws SQLException, ClassNotFoundException {
         if (!sacerdoteTrueInitialized) {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        HttpSession session = (HttpSession) externalContext.getSession(false);
-        
-        // Obtener el nombre de usuario de la sesión
-        String nombreUsuario = (String) session.getAttribute("usuario");
-        
-        // Obtener el tipo de usuario desde la base de datos utilizando el UsuarioDao
-        String tipoUsuario = userDao.obtenerTipoUsuario(nombreUsuario);
-        sacerdoteTrue = "Sacerdote".equals(tipoUsuario);
-        sacerdoteTrueInitialized = true;
-    }
-    return sacerdoteTrue;
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpSession session = (HttpSession) externalContext.getSession(false);
+
+            // Obtener el nombre de usuario de la sesión
+            String nombreUsuario = (String) session.getAttribute("usuario");
+
+            // Obtener el tipo de usuario desde la base de datos utilizando el UsuarioDao
+            String tipoUsuario = userDao.obtenerTipoUsuario(nombreUsuario);
+            sacerdoteTrue = "Sacerdote".equals(tipoUsuario);
+            sacerdoteTrueInitialized = true;
+        }
+        return sacerdoteTrue;
     }
 
     public void setSacerdoteTrue(boolean sacerdoteTrue) {

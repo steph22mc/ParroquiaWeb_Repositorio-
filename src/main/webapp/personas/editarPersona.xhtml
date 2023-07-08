@@ -8,52 +8,52 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <f:metadata>
-    <f:viewParam name="cedula" value="#{gestionPersonas.cedula}" />
-    <f:event listener="#{gestionPersonas.cargarPersonas()}" type="preRenderView"/>
-</f:metadata>
+            <f:metadata>
+                <f:viewParam name="cedula" value="#{gestionPersonas.cedula}" />
+                <f:event listener="#{gestionPersonas.cargarPersonas()}" type="preRenderView"/>
+            </f:metadata>
 
-<h:form>
-    <h:panelGrid columns="2">
-        <h:outputLabel for="primerNombre" value="Primer Nombre:"/>
-        <p:inputText id="primerNombre" value="#{gestionPersonas.persona.primerNombre}" required="true"/>
-        <h:message for="primerNombre" />
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="primerNombre" value="Primer Nombre:"/>
+                    <p:inputText id="primerNombre" value="#{gestionPersonas.persona.primerNombre}" required="true"/>
+                    <h:message for="primerNombre" />
 
-        <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
-        <p:inputText id="segundoNombre" value="#{gestionPersonas.persona.segundoNombre}"/>
-        <h:message for="segundoNombre" />
+                    <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
+                    <p:inputText id="segundoNombre" value="#{gestionPersonas.persona.segundoNombre}"/>
+                    <h:message for="segundoNombre" />
 
-        <h:outputLabel for="primerApellido" value="Primer Apellido:" />
-        <p:inputText id="primerApellido" value="#{gestionPersonas.persona.primerApellido}" required="true"/>
-        <h:message for="primerApellido" />
+                    <h:outputLabel for="primerApellido" value="Primer Apellido:" />
+                    <p:inputText id="primerApellido" value="#{gestionPersonas.persona.primerApellido}" required="true"/>
+                    <h:message for="primerApellido" />
 
-        <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
-        <p:inputText id="segundoApellido" value="#{gestionPersonas.persona.segundoApellido}"/>
-        <h:message for="segundoApellido" />
+                    <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
+                    <p:inputText id="segundoApellido" value="#{gestionPersonas.persona.segundoApellido}"/>
+                    <h:message for="segundoApellido" />
 
-        <h:outputLabel for="genero" value="Género:" />
-        <p:selectOneMenu id="genero" value="#{gestionPersonas.persona.genero}" required="true">
-            <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
-            <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
-        </p:selectOneMenu>
-        <h:message for="genero" />
+                    <h:outputLabel for="genero" value="Género:" />
+                    <p:selectOneMenu id="genero" value="#{gestionPersonas.persona.genero}" required="true">
+                        <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                        <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                    </p:selectOneMenu>
+                    <h:message for="genero" />
 
-        <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
-        <p:calendar id="fechaNacimiento" value="#{gestionPersonas.persona.fechaNacimiento}" required="true" pattern="yyyy-MM-dd" />
-        <h:message for="fechaNacimiento" />
+                    <h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
+                    <p:calendar id="fechaNacimiento" value="#{gestionPersonas.persona.fechaNacimiento}" required="true" pattern="yyyy-MM-dd" />
+                    <h:message for="fechaNacimiento" />
 
-        <h:outputLabel for="telefono" value="Teléfono:" />
-        <h:inputText id="telefono" value="#{gestionPersonas.persona.telefono}" />
+                    <h:outputLabel for="telefono" value="Teléfono:" />
+                    <h:inputText id="telefono" value="#{gestionPersonas.persona.telefono}" />
 
-        <!-- Datalist para mostrar las direcciones filtradas -->
-        <h:outputLabel value="Dirección:" />
-        <p:autoComplete id="direccionList" value="#{gestionPersonas.persona.direccion}"
-                        completeMethod="#{gestionPersonas.buscarDirecciones}" scrollHeight="250" />
+                    <!-- Datalist para mostrar las direcciones filtradas -->
+                    <h:outputLabel value="Dirección:" />
+                    <p:autoComplete id="direccionList" value="#{gestionPersonas.persona.direccion}"
+                                    completeMethod="#{gestionPersonas.buscarDirecciones}" scrollHeight="250" />
 
-    </h:panelGrid>
-    <p:commandButton value="Actualizar" action="#{gestionPersonas.actualizarPersona}" />
-    <h:commandLink value="Cancelar" action="#{gestionPersonas.redirigirAPersona()}" immediate="true"/>
-</h:form>
+                </h:panelGrid>
+                <p:commandButton value="Actualizar" action="#{gestionPersonas.actualizarPersona}" />
+                <h:commandLink value="Cancelar" action="#{gestionPersonas.redirigirAPersona()}" immediate="true"/>
+            </h:form>
 
     </h:body>
 </html>

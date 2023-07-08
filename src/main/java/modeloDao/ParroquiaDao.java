@@ -42,12 +42,16 @@ public class ParroquiaDao {
     }
 
     public void update(Parroquia parroquia) {
-        String query = "{CALL ActualizarParroquia(?, ?, ?)}";
-        try (CallableStatement statement = connection.prepareCall(query)) {
+        String query = "SELECT ActualizarParroquia(?, ?, ?) AS result";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, parroquia.getIdParroquia());
             statement.setInt(2, parroquia.getIdDireccion());
             statement.setString(3, parroquia.getNombreParroquia());
-            statement.executeUpdate();
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int rowsAffected = resultSet.getInt("result");
+                // Verificar el número de filas afectadas y realizar las acciones necesarias
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

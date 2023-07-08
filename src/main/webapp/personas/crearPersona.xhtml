@@ -11,19 +11,19 @@
         
         <h:form id="crearPersonaForm">
             <h:outputLabel for="cedula" value="Cedula:" />
-        <p:inputText id="cedula" value="#{gestionPersonas.nuevaCedula}" required="true"/>
-        <h:message for="cedula" />
-        
-        <h:outputLabel for="primerNombre" value="Primer Nombre:"/>
-        <p:inputText id="primerNombre" value="#{gestionPersonas.nuevoPrimerNombre}" required="true"/>
-        <h:message for="primerNombre" />
-        
-        <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
-        <p:inputText id="segundoNombre" value="#{gestionPersonas.nuevoSegundoNombre}"/>
-        <h:message for="segundoNombre" />
-        
-        <h:outputLabel for="primerApellido" value="Primer Apellido:" />
-        <p:inputText id="primerApellido" value="#{gestionPersonas.nuevoPrimerApellido}" required="true"/>
+            <p:inputText id="cedula" value="#{gestionPersonas.nuevaCedula}" required="true"/>
+            <h:message for="cedula" />
+
+            <h:outputLabel for="primerNombre" value="Primer Nombre:"/>
+            <p:inputText id="primerNombre" value="#{gestionPersonas.nuevoPrimerNombre}" required="true"/>
+            <h:message for="primerNombre" />
+
+            <h:outputLabel for="segundoNombre" value="Segundo Nombre:" />
+            <p:inputText id="segundoNombre" value="#{gestionPersonas.nuevoSegundoNombre}"/>
+            <h:message for="segundoNombre" />
+
+            <h:outputLabel for="primerApellido" value="Primer Apellido:" />
+            <p:inputText id="primerApellido" value="#{gestionPersonas.nuevoPrimerApellido}" required="true"/>
             <h:message for="primerApellido" />
 
             <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
@@ -47,14 +47,14 @@
             <!-- Datalist para mostrar las direcciones filtradas-->
             <p:growl id="msgs" showDetail="true" showSummary="true"/>
 
-        <div class="field col-12 md:col-4">
-                    <p:outputLabel value="Simple" for="@next"/>
+            <div class="field col-12 md:col-4">
+                    <p:outputLabel value="Direccion:" for="@next"/>
                     <p:autoComplete id="acSimple" value="#{gestionPersonas.direccionSeleccionada}"
                                 completeMethod="#{gestionPersonas.buscarDirecciones}" scrollHeight="250"/>
             </div>
             
-<p:commandButton value="Guardar" action="#{gestionPersonas.crearPersona()}"  />
-<p:commandButton type="reset" value="Reset" />
+            <p:commandButton value="Guardar" action="#{gestionPersonas.crearPersona()}"  />
+            <p:commandButton type="reset" value="Reset" />
 
         </h:form>
     
