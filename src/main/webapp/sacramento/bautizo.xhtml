@@ -17,14 +17,15 @@
 
             <h:outputLabel value="Cantidad de registros: #{controlBautizo.cantidad.size()}" />
             <h:outputLabel value="Resultado de Busqueda: #{controlBautizo.registros.size()}" />
-
+            
             <h:inputText value="#{controlBautizo.busqueda}" disabled="#{controlBautizo.mostrandoTabla}" rendered="#{controlBautizo.estado eq 'buscando'}">
-    <f:validateLength minimum="4" />
-    <h:message for="inputSearch" style="color: red" />
-</h:inputText>
-<h:commandButton value="Buscar" action="#{controlBautizo.buscar}" disabled="#{controlBautizo.mostrandoTabla}" rendered="#{controlBautizo.estado eq 'buscando'}" />
-
-            <p:commandButton action="#{controlBautizo.redireccionarCrear()}" value="Crear Bautizo" />
+                <f:validateLength minimum="4" />
+                <h:message for="inputSearch" style="color: red" />
+            </h:inputText>
+            <h:commandButton value="Buscar" action="#{controlBautizo.buscar}" disabled="#{controlBautizo.mostrandoTabla}" rendered="#{controlBautizo.estado eq 'buscando'}" />
+            
+            <p:commandButton action="#{controlBautizo.redireccionarCrear()}" value="Crear Bautizo" immediate="true" />
+            
             <br/><br/>
 
             <p:dataTable value="#{controlBautizo.registros}" var="bautizo" rendered="#{controlBautizo.mostrandoTabla}">

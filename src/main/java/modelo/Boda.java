@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author DELL
@@ -15,7 +17,7 @@ public class Boda {
     private String esposo;
     private String idEsposa;
     private String esposa;
-    private String fechaBoda;
+    private Date fechaBoda;
     private int idDireccion;
     private String direccion;
     private int idParroquia;
@@ -38,7 +40,7 @@ public class Boda {
     public Boda() {
     }
 
-    public Boda(String idEsposo, String esposo, String idEsposa, String esposa, String fechaBoda, int idDireccion, String direccion, int idParroquia, String parroquia, String idPadrino, String madrinaPadrino, String idMadreEsposo, String madreEsposo, String idPadreEsposo, String padreEsposo, String idMadreEsposa, String madreEsposa, String idPadreEsposa, String padreEsposa, String cedulaPersona, String persona, int idSacerdote, String sacerdote) {
+    public Boda(String idEsposo, String esposo, String idEsposa, String esposa, Date fechaBoda, int idDireccion, String direccion, int idParroquia, String parroquia, String idPadrino, String madrinaPadrino, String idMadreEsposo, String madreEsposo, String idPadreEsposo, String padreEsposo, String idMadreEsposa, String madreEsposa, String idPadreEsposa, String padreEsposa, String cedulaPersona, String persona, int idSacerdote, String sacerdote) {
         this.idEsposo = idEsposo;
         this.esposo = esposo;
         this.idEsposa = idEsposa;
@@ -104,11 +106,11 @@ public class Boda {
         this.esposa = esposa;
     }
 
-    public String getFechaBoda() {
+    public Date getFechaBoda() {
         return fechaBoda;
     }
 
-    public void setFechaBoda(String fechaBoda) {
+    public void setFechaBoda(Date fechaBoda) {
         this.fechaBoda = fechaBoda;
     }
 

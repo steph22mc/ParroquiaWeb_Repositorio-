@@ -175,8 +175,8 @@ public class ControlBautizo implements Serializable{
     public List<Persona> buscarPersonas(String query) {
         try {
             personaDao = new PersonaDao();
-            return personaDao.buscarPersonas(query);
-        } catch (SQLException | ClassNotFoundException e) {
+            return personaDao.buscarBautizado(query);
+        } catch (SQLException e) {
             // Manejar la excepción apropiadamente (mostrar un mensaje de error, por ejemplo)
         }
         return null;

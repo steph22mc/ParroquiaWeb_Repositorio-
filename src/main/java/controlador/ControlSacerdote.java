@@ -147,8 +147,8 @@ public class ControlSacerdote implements Serializable{
     public List<Persona> buscarPersonas(String query){
         try{
             personaDao = new PersonaDao();
-            return personaDao.buscarHombres(query);
-        }catch(SQLException | ClassNotFoundException e){
+            return personaDao.buscarParroco(query);
+        }catch(SQLException e){
             
         }
         return null;

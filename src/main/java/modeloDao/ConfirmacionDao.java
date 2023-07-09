@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Confirmacion;
@@ -67,7 +68,11 @@ public class ConfirmacionDao {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, confirmacion.getIdParroquia());
             statement.setString(2, confirmacion.getIdPadrinoMadrina());
-            statement.setDate(3, new java.sql.Date(confirmacion.getFechaConfirmacion().getTime()));
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaStr = sdf.format(confirmacion.getFechaConfirmacion());
+            
+            statement.setString(3, fechaStr);
             statement.setInt(4, confirmacion.getIdDireccion());
             statement.setString(5, confirmacion.getIdPadre());
             statement.setString(6, confirmacion.getIdMadre());
@@ -85,7 +90,10 @@ public class ConfirmacionDao {
             statement.setInt(1, confirmacion.getIdConfirmacion());
             statement.setInt(2, confirmacion.getIdParroquia());
             statement.setString(3, confirmacion.getIdPadrinoMadrina());
-            statement.setDate(4, new java.sql.Date(confirmacion.getFechaConfirmacion().getTime()));
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaStr = sdf.format(confirmacion.getFechaConfirmacion());
+            statement.setString(4, fechaStr);
             statement.setInt(5, confirmacion.getIdDireccion());
             statement.setString(6, confirmacion.getIdPadre());
             statement.setString(7, confirmacion.getIdMadre());
@@ -112,5 +120,79 @@ public class ConfirmacionDao {
             e.printStackTrace();
         }
         return 0;
+    }
+    
+    public List<Confirmacion> buscarConfirmacion(String searchText) throws SQLException{
+        List<Confirmacion> confirmacionesFiltradas = new ArrayList<>();
+        
+        String query = "SELECT * FROM V_Confirmacion WHERE Cedula_Persona LIKE ? OR Persona LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            for (int i = 1; i <= 2; i++) {
+                statement.setString(i, searchTerm);
+            }
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Confirmacion confirmacion = new Confirmacion();
+                    confirmacion.setIdConfirmacion(resultSet.getInt("Id_Confirmacion"));
+                    confirmacion.setIdParroquia(resultSet.getInt("Id_Parroquia"));
+                    confirmacion.setNombre_parroquia(resultSet.getString("Nombre_Parroquia"));
+                    confirmacion.setIdPadrinoMadrina(resultSet.getString("Id_Padrino_Madrina"));
+                    confirmacion.setIdPadrinoMadrina(resultSet.getString("Madrina_Padrino"));
+                    confirmacion.setFechaConfirmacion(resultSet.getDate("Fecha_Confirmacion"));
+                    confirmacion.setIdDireccion(resultSet.getInt("Id_Direccion"));
+                    confirmacion.setDireccion(resultSet.getString("Direccion"));
+                    confirmacion.setIdPadre(resultSet.getString("Id_Padre"));
+                    confirmacion.setPadre(resultSet.getString("Padre"));
+                    confirmacion.setIdMadre(resultSet.getString("Id_Madre"));
+                    confirmacion.setMadre(resultSet.getString("Madre"));
+                    confirmacion.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    confirmacion.setPersona(resultSet.getString("Persona"));
+                    confirmacion.setIdSacerdote(resultSet.getInt("Id_Sacerdote"));
+                    confirmacion.setSacerdote(resultSet.getString("Sacerdote"));
+                    
+                    confirmacionesFiltradas.add(confirmacion);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return confirmacionesFiltradas;
+        }
+    }
+    
+    public Confirmacion getById(int idConfirmacion){
+        String query = "SELECT * FROM V_Confirmacion WHERE Id_Confirmacion = ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setInt(1, idConfirmacion);
+            ResultSet resultSet = statement.executeQuery();
+            
+            if(resultSet.next()){
+                Confirmacion confirmacion = new Confirmacion();
+                confirmacion.setIdConfirmacion(resultSet.getInt("Id_Confirmacion"));
+                confirmacion.setIdParroquia(resultSet.getInt("Id_Parroquia"));
+                confirmacion.setNombre_parroquia(resultSet.getString("Nombre_Parroquia"));
+                confirmacion.setIdPadrinoMadrina(resultSet.getString("Id_Padrino_Madrina"));
+                confirmacion.setIdPadrinoMadrina(resultSet.getString("Madrina_Padrino"));
+                confirmacion.setFechaConfirmacion(resultSet.getDate("Fecha_Confirmacion"));
+                confirmacion.setIdDireccion(resultSet.getInt("Id_Direccion"));
+                confirmacion.setDireccion(resultSet.getString("Direccion"));
+                confirmacion.setIdPadre(resultSet.getString("Id_Padre"));
+                confirmacion.setPadre(resultSet.getString("Padre"));
+                confirmacion.setIdMadre(resultSet.getString("Id_Madre"));
+                confirmacion.setMadre(resultSet.getString("Madre"));
+                confirmacion.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                confirmacion.setPersona(resultSet.getString("Persona"));
+                confirmacion.setIdSacerdote(resultSet.getInt("Id_Sacerdote"));
+                confirmacion.setSacerdote(resultSet.getString("Sacerdote"));
+                
+                return confirmacion;
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

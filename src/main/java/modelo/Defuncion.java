@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author DELL
@@ -12,7 +14,7 @@ package modelo;
 public class Defuncion {
     private int idDefuncion;
     private String estatusCompromiso;
-    private String fechaDefuncion;
+    private Date fechaDefuncion;
     private String idPadre;
     private String padre;
     private String idMadre;
@@ -29,7 +31,7 @@ public class Defuncion {
     public Defuncion() {
     }
 
-    public Defuncion(String estatusCompromiso, String fechaDefuncion, String idPadre, String padre, String idMadre, String madre, int idDireccion, String direccion, int idParroquia, String nombre_Parroquia, String cedulaPersona, String persona, int idSacerdote, String sacerdote) {
+    public Defuncion(String estatusCompromiso, Date fechaDefuncion, String idPadre, String padre, String idMadre, String madre, int idDireccion, String direccion, int idParroquia, String nombre_Parroquia, String cedulaPersona, String persona, int idSacerdote, String sacerdote) {
         this.estatusCompromiso = estatusCompromiso;
         this.fechaDefuncion = fechaDefuncion;
         this.idPadre = idPadre;
@@ -62,11 +64,11 @@ public class Defuncion {
         this.estatusCompromiso = estatusCompromiso;
     }
 
-    public String getFechaDefuncion() {
+    public Date getFechaDefuncion() {
         return fechaDefuncion;
     }
 
-    public void setFechaDefuncion(String fechaDefuncion) {
+    public void setFechaDefuncion(Date fechaDefuncion) {
         this.fechaDefuncion = fechaDefuncion;
     }
 

@@ -260,18 +260,209 @@ public class PersonaDao {
         return personasFiltradas;
     }
     
-        public String obtenerCedulaPorNombre(String nombre) throws SQLException{
-            String query = "SELECT Cedula_Persona FROM v_nombre_persona WHERE Nombre = ?";
-            try (PreparedStatement statement = connection.prepareStatement(query)){
-                statement.setString(1, nombre);
+    public String obtenerCedulaPorNombre(String nombre) throws SQLException{
+        String query = "SELECT Cedula_Persona FROM v_nombre_persona WHERE Nombre = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            statement.setString(1, nombre);
 
-                try (ResultSet resultSet = statement.executeQuery()){
-                    if(resultSet.next()){
-                        return resultSet.getString("Cedula_Persona");
-                    }
+            try (ResultSet resultSet = statement.executeQuery()){
+                if(resultSet.next()){
+                    return resultSet.getString("Cedula_Persona");
                 }
             }
-            return null;
         }
-
+        return null;
+    }
+    
+    public List<Persona> buscarEsposo(String searchText) throws SQLException{
+        List<Persona> personasFiltradas = new ArrayList<>();
+        String query = "SELECT * FROM obtenernuevaesposo WHERE Nombre LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    
+                    personasFiltradas.add(persona);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return personasFiltradas;
+        }
+    }
+    
+    public List<Persona> buscarEsposa(String searchText) throws SQLException{
+        List<Persona> personasFiltradas = new ArrayList<>();
+        String query = "SELECT * FROM ObtenerNuevaEsposa WHERE Nombre LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    
+                    personasFiltradas.add(persona);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return personasFiltradas;
+        }
+    }
+    
+    public List<Persona> buscarParroco(String searchText) throws SQLException{
+        List<Persona> personasFiltradas = new ArrayList<>();
+        String query = "SELECT * FROM ObtenerNuevoParroco WHERE Nombre LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    
+                    personasFiltradas.add(persona);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return personasFiltradas;
+        }
+    }
+    
+    public List<Persona> buscarBautizado(String searchText) throws SQLException{
+        List<Persona> personasFiltradas = new ArrayList<>();
+        String query = "SELECT * FROM V_BAUTIZADO WHERE Nombre LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    
+                    personasFiltradas.add(persona);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return personasFiltradas;
+        }
+    }
+    
+    public List<Persona> buscarComunionPersona(String searchText) throws SQLException{
+        List<Persona> personasFiltradas = new ArrayList<>();
+        String query = "SELECT * FROM ObtenerPersonaComunion WHERE Nombre LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    
+                    personasFiltradas.add(persona);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return personasFiltradas;
+        }
+    }
+    
+    public List<Persona> buscarConfirmacionPersona(String searchText) throws SQLException{
+        List<Persona> personasFiltradas = new ArrayList<>();
+        String query = "SELECT * FROM ObtenerPersonaConfirmacion WHERE Nombre LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    
+                    personasFiltradas.add(persona);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return personasFiltradas;
+        }
+    }
+    
+    public List<Persona> buscarDefuncionPersona(String searchText) throws SQLException{
+        List<Persona> personasFiltradas = new ArrayList<>();
+        String query = "SELECT * FROM ObtenerPersonaDefuncion WHERE Nombre LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    
+                    personasFiltradas.add(persona);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return personasFiltradas;
+        }
+    }
+    
+    public List<Persona> buscarBodaPersona(String searchText) throws SQLException{
+        List<Persona> personasFiltradas = new ArrayList<>();
+        String query = "SELECT * FROM ObtenerPersonaBoda WHERE Nombre LIKE ?";
+        
+        try (PreparedStatement statement = connection.prepareStatement(query)){
+            String searchTerm = "%" + searchText + "%";
+            statement.setString(1, searchTerm);
+            
+            try(ResultSet resultSet = statement.executeQuery()){
+                while(resultSet.next()){
+                    Persona persona = new Persona();
+                    persona.setCedulaPersona(resultSet.getString("Cedula_Persona"));
+                    persona.setNombre(resultSet.getString("Nombre"));
+                    
+                    personasFiltradas.add(persona);
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return personasFiltradas;
+        }
+    }
 }
