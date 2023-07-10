@@ -1,12 +1,59 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+            <div>
+                <p:growl id="growl" showDetail="true" />
+                <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+                <h:outputLabel for="fecha" value="Fecha de Primera Comunion: "  />
+                <p:calendar id="fecha" value="#{controlComunion.nuevaFecha}" required="true" pattern="yyyy-MM-dd" />
+                <h:message for="fecha" />
+
+                <h:outputLabel for="persona" value="Persona: " />
+                <p:autoComplete cache="true" id="persona" value="#{controlComunion.personaSeleccionada}" 
+                                emptyMessage="No results" maxResults="10" queryDelay="1000" completeMethod="#{controlComunion.buscarPersonas}" scrollHeight="250" required="true"  />
+                <h:message for="persona" />
+
+                <h:outputLabel for="padre" value="Padre: " />
+                <p:autoComplete cache="true" id="padre" value="#{controlComunion.hombreSeleccionado}" 
+                                emptyMessage="No results" maxResults="10" queryDelay="1000" completeMethod="#{controlComunion.buscarHombres}" scrollHeight="250"  />
+                <h:message for="padre" />
+
+                <h:outputLabel for="madre" value="Madre: " />
+                <p:autoComplete cache="true" id="madre" value="#{controlComunion.mujerSeleccionada}" 
+                                emptyMessage="No results" maxResults="10" queryDelay="1000" completeMethod="#{controlComunion.buscarMujeres}" scrollHeight="250"  />
+                <h:message for="madre" />
+
+                <h:outputLabel for="direccion" value="Direccion: " />
+                <p:autoComplete cache="true" id="direccion" value="#{controlComunion.hombreSeleccionado}" 
+                                required="true" emptyMessage="No results" maxResults="10" queryDelay="1000" completeMethod="#{controlComunion.buscarDirecciones}" scrollHeight="250"  />
+                <h:message for="direccion" />
+
+                <h:outputLabel for="parroquia" value="Parroquia: " />
+                <p:autoComplete cache="true" id="parroquia" value="#{controlComunion.parroquiaSeleccionada}" 
+                                required="true" emptyMessage="No results" maxResults="10" queryDelay="1000" completeMethod="#{controlComunion.buscarParroquia}" scrollHeight="250"  />
+                <h:message for="parroquia" />
+
+                <h:outputLabel for="sacerdote" value="Sacerdote: " />
+                <p:autoComplete cache="true" id="sacerdote" value="#{controlComunion.sacerdoteSeleccionado}" 
+                                required="true" emptyMessage="No results" maxResults="10" queryDelay="1000" completeMethod="#{controlComunion.buscarSacerdote}" scrollHeight="250"  />
+                <h:message for="sacerdote" />
+            </div>
+            
+            <p:commandButton value="Guardar" action="#{controlComunion.crearComunion()}"  />
+            <p:commandButton type="reset" value="Reset" />
+            <p:commandButton value="Crear Persona" action="#{controlSacramento.redireccionarCrearPersona()}" immediate="true" />
+            <p:commandButton value="Crear Direccion" action="#{controlSacramento.redireccionarCrearDireccion()}" immediate="true" />
+            <p:commandButton value="Crear Parroquia" action="#{controlSacramento.redireccionarCrearParroquia()}"  immediate="true"/>
+            <p:commandButton value="Crear Sacerdote" action="#{controlSacramento.redireccionarCrearSacerdote()}"  immediate="true"/>
+        </h:form>
     </h:body>
 </html>
 

@@ -49,20 +49,20 @@ public class DireccionDao {
     
     public void update(Direccion direccion) {
         String query = "SELECT ActualizarDireccion(?, ?, ?, ?) AS result";
-try (PreparedStatement statement = connection.prepareStatement(query)) {
-    statement.setInt(1, direccion.getIdDireccion());
-    statement.setString(2, direccion.getNombreLugar());
-    statement.setString(3, direccion.getProvincia());
-    statement.setString(4, direccion.getDistrito());
-    ResultSet resultSet = statement.executeQuery();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, direccion.getIdDireccion());
+            statement.setString(2, direccion.getNombreLugar());
+            statement.setString(3, direccion.getProvincia());
+            statement.setString(4, direccion.getDistrito());
+            ResultSet resultSet = statement.executeQuery();
 
-    if (resultSet.next()) {
-        int rowsAffected = resultSet.getInt("result");
-        // Verificar el número de filas afectadas y realizar las acciones necesarias
-    }
-} catch (SQLException e) {
-    e.printStackTrace();
-}
+            if (resultSet.next()) {
+                int rowsAffected = resultSet.getInt("result");
+                // Verificar el número de filas afectadas y realizar las acciones necesarias
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     public void delete(int idDireccion) {

@@ -24,7 +24,7 @@ public class BodaDao {
 
     public BodaDao() {
         try {
-            connection = Conexion.getConnection("Sacerdote"); // Tipo de usuario (Sacerdote, Secretario, etc.)
+            connection = Conexion.getConnection("Secretario"); // Tipo de usuario (Sacerdote, Secretario, etc.)
         } catch (SQLException e) {
             e.printStackTrace();
         }

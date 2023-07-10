@@ -13,7 +13,7 @@
 
     <h:body>
         <h:form>
-            <h1>Registro de Bautizo</h1>
+            <h1>Registros de Bautizo</h1>
 
             <h:outputLabel value="Cantidad de registros: #{controlBautizo.cantidad.size()}" />
             <h:outputLabel value="Resultado de Busqueda: #{controlBautizo.registros.size()}" />
@@ -30,7 +30,6 @@
 
             <p:dataTable value="#{controlBautizo.registros}" var="bautizo" rendered="#{controlBautizo.mostrandoTabla}">
                 <p:column headerText="Id">#{bautizo.idBautizo}</p:column>
-                <p:column headerText="Cedula del Bautizado">#{bautizo.cedulaPersona}</p:column>
                 <p:column headerText="Bautizado">#{bautizo.persona}</p:column>
                 <p:column headerText="Fecha">#{bautizo.fechaBautizo}</p:column>
                 <p:column headerText="Parroquia">#{bautizo.nombreParroquia}</p:column>
@@ -38,7 +37,7 @@
                 <p:column headerText="Madrina">#{bautizo.madrina}</p:column>
                 <p:column headerText="Padrino">#{bautizo.padrino}</p:column>
                 <p:column headerText="Sacerdote">#{bautizo.sacerdote}</p:column>
-                <p:column>
+                <p:column headerText="Acciones">
                     <h:commandButton value="Actualizar" action="#{controlBautizo.redirigirEditar(bautizo.idBautizo)}" />
                     <!-- Botón "Ver" que abre el modal -->
                     <a href="#" onclick="mostrarPopup('#{bautizo.idBautizo}', '#{bautizo.fechaBautizo}', '#{bautizo.nombreParroquia}', '#{bautizo.direccion}', '#{bautizo.madrina}', '#{bautizo.padrino}', '#{bautizo.cedulaPersona}', '#{bautizo.persona}', '#{bautizo.sacerdote}'); return false;">Ver</a>
@@ -48,6 +47,7 @@
             <h:commandButton value="Retroceder" action="#{controlBautizo.retroceder}" rendered="#{controlBautizo.mostrandoTabla}" />
             
         </h:form>
+        
         
         <div id="popup" class="popup">
             <h2>Detalles del Bautizo</h2>

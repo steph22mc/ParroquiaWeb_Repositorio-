@@ -1,12 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+            <p:inputText id="searchInput" value="#{gestionUsuario.searchText}" />
+            <p:commandButton value="Buscar" action="#{gestionUsuario.buscarUsuarios()}" update="tablaUsuarios" />
+            <p:commandButton value="Crear Registro" action="#{gestionUsuario.redireccionarCrear()}" />
+            
+            <p:dataTable value="#{gestionUsuario.usuarios}" var="usuario"
+                         id="tablaUsuarios" paginator="true" rows="7">
+                <p:column headerText="Id">
+                    #{usuario.idUsuario}
+                </p:column>
+                <p:column>
+                    #{usuario.nombreCompleto}
+                </p:column>
+                <p:column headerText="Nickname">
+                    #{usuario.usuario}
+                </p:column>
+                <p:column headerText="Correo">
+                    #{usuario.correoElectronico}
+                </p:column>
+                <p:column headerText="Tipo de Usuario">
+                    #{usuario.tipoUsuario}
+                </p:column>
+                
+                <p:column headerText="Acciones">
+                    <!-- Botón de eliminación con cuadro de confirmación -->
+                    <p:commandButton id="deleteButton" value="Eliminar" title="Eliminar"
+                                     action="#{gestionUsuario.eliminarUsuario(usuario.idUsuario)}"> 
+                         <p:confirm header="Confirmation" 
+                                    message="Are you sure?"
+                                    icon="pi pi-exclamation-triangle" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            
+            <!-- Cuadro de confirmación global -->
+            <p:confirmDialog global="true">
+                <p:commandButton value="Yes" type="button"
+                                 styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button"
+                                 styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>  
+        </h:form>
     </h:body>
 </html>
 

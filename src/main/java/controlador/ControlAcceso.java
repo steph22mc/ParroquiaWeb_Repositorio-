@@ -16,6 +16,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import modeloDao.UsuarioDao;
 import user_manager.LoginManager;
 
 /**
@@ -135,4 +136,5 @@ public class ControlAcceso {
         }
         return null;
     }
+    
 }

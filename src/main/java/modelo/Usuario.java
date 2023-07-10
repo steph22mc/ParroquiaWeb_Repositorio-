@@ -16,6 +16,7 @@ public class Usuario {
     private String primerApellido;
     private String segundoApellido;
     private String usuario;
+    private String nombreCompleto;
     private String correoElectronico;
     private String contrasena;
     private String tipoUsuario;
@@ -96,4 +97,14 @@ public class Usuario {
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+    
+    
 }

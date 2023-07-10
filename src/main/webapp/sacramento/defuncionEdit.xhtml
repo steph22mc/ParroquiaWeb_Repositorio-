@@ -1,12 +1,63 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+            <div>
+                <p:growl id="growl" showDetail="true" />
+                <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+                <h:outputLabel for="fecha" value="Fecha de Bautizo: "  />
+                <p:calendar id="fecha" value="#{controlDefuncion.defuncion.fechaDefuncion}" required="true" pattern="yyyy-MM-dd" />
+                <h:message for="fecha" />
+                
+                <h:outputLabel for="estatus" value="Estatus: "/>
+                <p:selectOneMenu id="rango" value="#{controlDefuncion.defuncion.estatusCompromiso}" required="true">
+                        <f:selectItem itemLabel="Soltero" itemValue="Soltero" />
+                        <f:selectItem itemLabel="Casado" itemValue="Casado" />
+                    </p:selectOneMenu>
+                <h:message for="estatus" />
+
+                <h:outputLabel for="difunto" value="Difunto: " />
+                <p:autoComplete id="difunto" value="#{controlDefuncion.defuncion.persona}" 
+                                    required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlDefuncion.buscarPersonas}" scrollHeight="250"  />
+                <h:message for="difunto" />
+                
+                <h:outputLabel for="padre" value="Padre: " />
+                <p:autoComplete id="padre" value="#{controlDefuncion.defuncion.padre}" 
+                                queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlDefuncion.buscarMujeres}" scrollHeight="250"/>
+                <h:message for="padre" />
+                
+                <h:outputLabel for="madre" value="Madre: " />
+                <p:autoComplete id="madre" value="#{controlDefuncion.defuncion.madre}" 
+                                queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlDefuncion.buscarHombres}" scrollHeight="250" />
+                <h:message for="madre" />
+                
+                <h:outputLabel for="direccion" value="Direccion: " />
+                <p:autoComplete id="direccion" value="#{controlDefuncion.defuncion.direccion}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlDefuncion.buscarDirecciones}" scrollHeight="250" />
+                <h:message for="direccion" />
+                
+                <h:outputLabel for="parroquia" value="Parroquia: " />
+                <p:autoComplete id="parroquia" value="#{controlDefuncion.defuncion.nombre_Parroquia}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlDefuncion.buscarParroquia}" scrollHeight="250" />
+                <h:message for="parroquia" />
+                
+                <h:outputLabel for="sacerdote" value="Sacerdote: " />
+                <p:autoComplete id="sacerdote" value="#{controlDefuncion.defuncion.sacerdote}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlDefuncion.buscarSacerdote}" scrollHeight="250" />
+                <h:message for="sacerdote" />
+            </div>
+            
+            <p:commandButton value="Actualizar" action="#{controlDefuncion.actualizar()}"  />
+            <h:commandLink value="Cancelar" action="#{controlSacramento.redirigirADefuncion()}" immediate="true"/>
+        </h:form>
     </h:body>
 </html>
 

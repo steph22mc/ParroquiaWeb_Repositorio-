@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -135,7 +136,13 @@ public class ControlBautizo implements Serializable{
             } catch (ClassNotFoundException e) {
                 // Manejar la excepción apropiadamente
             }
-            bautizoDao.update(bautizo);
+            int isUpdate = bautizoDao.update(bautizo);
+            
+            if(isUpdate == 0){
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Message", " Always Bet on Prime!");
+            }else{
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Message", "Bet on Prime!");
+            }
             
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             redirigir("/sacramento/bautizo.xhtml");
@@ -389,7 +396,7 @@ public class ControlBautizo implements Serializable{
     public String redireccionarCrear(){
         return "bautizoCrear.xhtml?faces-redirect=true";
     }
-
+    
     // Método privado para redirigir a una URL específica
     private void redirigir(String url) throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();

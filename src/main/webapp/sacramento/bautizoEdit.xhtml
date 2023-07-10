@@ -14,39 +14,45 @@
             <f:event listener="#{controlBautizo.cargarBautizos()}" type="preRenderView"/>
         </f:metadata>
         
-        <h:form>
-            <h:panelGrid columns="2" >
+        <h:form id="editForm">
+            <div>
                 <h:outputLabel for="fechaBautizo" value="Fecha de Bautizo:" />
                 <p:calendar id="fechaBautizo" value="#{controlBautizo.bautizo.fechaBautizo}" required="true" pattern="yyyy-MM-dd" />
                 <h:message for="fechaBautizo" />
                 
                 <h:outputLabel for="bautizado" value="Bautizado: " />
                 <p:autoComplete id="bautizado" value="#{controlBautizo.bautizo.persona}" 
-                                completeMethod="#{controlBautizo.buscarPersonas}" scrollHeight="250" />
+                                required="true" completeMethod="#{controlBautizo.buscarPersonas}" scrollHeight="250" />
+                <h:message for="bautizo" />
                 
                 <h:outputLabel for="madrina" value="Madrina: " />
                 <p:autoComplete id="madrina" value="#{controlBautizo.bautizo.madrina}" 
-                                completeMethod="#{controlBautizo.buscarMujeres}" scrollHeight="250" />
+                                required="true" completeMethod="#{controlBautizo.buscarMujeres}" scrollHeight="250" />
+                <h:message for="madrina" />
                 
                 <h:outputLabel for="padrino" value="Padrino: " />
                 <p:autoComplete id="padrino" value="#{controlBautizo.bautizo.padrino}" 
-                                completeMethod="#{controlBautizo.buscarHombres}" scrollHeight="250" />
+                                required="true" completeMethod="#{controlBautizo.buscarHombres}" scrollHeight="250" />
+                <h:message for="padrino" />
                 
                 <h:outputLabel for="direccion" value="Direccion: " />
                 <p:autoComplete id="direccion" value="#{controlBautizo.bautizo.direccion}" 
-                                completeMethod="#{controlBautizo.buscarDirecciones}" scrollHeight="250" />
+                                required="true" completeMethod="#{controlBautizo.buscarDirecciones}" scrollHeight="250" />
+                <h:message for="direccion" />
                 
                 <h:outputLabel for="parroquia" value="Parroquia: " />
                 <p:autoComplete id="parroquia" value="#{controlBautizo.bautizo.nombreParroquia}" 
-                                completeMethod="#{controlBautizo.buscarParroquia}" scrollHeight="250" />
+                                required="true" completeMethod="#{controlBautizo.buscarParroquia}" scrollHeight="250" />
+                <h:message for="parroquia" />
                 
                 <h:outputLabel for="sacerdote" value="Sacerdote: " />
                 <p:autoComplete id="sacerdote" value="#{controlBautizo.bautizo.sacerdote}" 
-                                completeMethod="#{controlBautizo.buscarSacerdote}" scrollHeight="250" />
-                
-            </h:panelGrid> 
-            <p:commandButton value="Actualizar" action="#{controlBautizo.actualizar}" />
-            <h:commandLink value="Cancelar" action="#{controlSacramento.redirigirABautizo}" immediate="true"/>
+                                required="true" completeMethod="#{controlBautizo.buscarSacerdote}" scrollHeight="250" />
+                <h:message for="sacerdote" />
+            </div>    
+            <p:commandButton value="Actualizar" action="#{controlBautizo.actualizar}" update="editForm" />
+            
+            <h:commandButton value="Crear Persona" action="#{controlSacramento.redireccionarCrearPersona()}" immediate="true" />
         </h:form>
     </h:body>
 </html>

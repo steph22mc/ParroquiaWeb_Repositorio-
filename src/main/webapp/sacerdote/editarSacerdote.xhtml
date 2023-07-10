@@ -24,7 +24,8 @@
             
             <p:outputLabel value="Sacerdote:" for="@next"/>
             <p:autoComplete id="sacerdote" value="#{controlSacerdote.sacerdote.sacerdote}"
-                            completeMethod="#{controlSacerdote.buscarPersonas}" scrollHeight="250"/>
+                            required="true" completeMethod="#{controlSacerdote.buscarPersonas}" scrollHeight="250"/>
+            <h:message for="sacerdote" />
             
             <p:commandButton value="Guardar" action="#{controlSacerdote.actualizar()}"  />
             <p:commandButton type="reset" value="Reset" />

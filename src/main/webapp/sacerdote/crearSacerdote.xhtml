@@ -19,10 +19,12 @@
             
             <p:outputLabel value="Sacerdote:" for="@next"/>
             <p:autoComplete id="sacerdote" value="#{controlSacerdote.personaSeleccionada}"
-                            completeMethod="#{controlSacerdote.buscarPersonas}" scrollHeight="250"/>
+                            required="true" completeMethod="#{controlSacerdote.buscarPersonas}" scrollHeight="250"/>
+            <h:message for="sacerdote" />
             
             <p:commandButton value="Guardar" action="#{controlSacerdote.crearSacerdote()}"  />
             <p:commandButton type="reset" value="Reset" />
+            <h:commandButton value="Crear Persona" action="#{controlSacramento.redireccionarCrearPersona()}" immediate="true" />
         </h:form>
     </h:body>
 </html>

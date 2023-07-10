@@ -332,6 +332,16 @@ public class ControlConfirmacion implements Serializable{
         return null;
     }
     
+    public List<Persona> buscarTestigo(String query) throws ClassNotFoundException {
+        try {
+            personaDao = new PersonaDao();
+            return personaDao.buscarPersonas(query);
+        } catch (SQLException e) {
+            // Manejar la excepción apropiadamente (mostrar un mensaje de error, por ejemplo)
+        }
+        return null;
+    }
+    
     public List<Persona> buscarHombres(String query) {
         try {
             personaDao = new PersonaDao();

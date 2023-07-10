@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <f:metadata>
+            <f:viewParam name="id" value="#{gestionUsuario.idUsuario}" />
+            <f:event listener="#{gestionUsuario.cargarUsuario()}" type="preRenderView" />
+        </f:metadata>
+        
+        <h:form>
+            <h:panelGrid id="grid" columns="3" cellpadding="7">
+                <h:outputLabel for="nombreUser" value="Nombre:" />
+                <p:inputText id="nombreUser" value="#{gestionUsuario.usuario.nombre}" required="true" />
+                <h:message for="nombreUser" />
+                
+                <h:outputLabel for="primerApellido" value="Primer Apellido:" />
+                <p:inputText id="primerApellido" value="#{gestionUsuario.usuario.primerApellido}" required="true" />
+                <h:message for="primerApellido" />
+                
+                <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
+                <p:inputText id="segundoApellido" value="#{gestionUsuario.usuario.segundoApellido}" />
+                <h:message for="segundoApellido" />
+                
+                <h:outputLabel for="nickname" value="Nickname:" />
+                <p:inputText id="nickname" value="#{gestionUsuario.usuario.usuario}" required="true" />
+                <h:message for="nickname" />
+                
+                <h:outputLabel for="correo" value="CorreoElectronico:" />
+                <p:inputText id="correo" value="#{gestionUsuario.usuario.correoElectronico}" required="true" />
+                <h:message for="correo" />
+                
+                <h:outputLabel for="contrasena" value="Contraseña:" />
+                <!-- Campo de entrada para la contraseña -->
+                <h:inputSecret id="contrasena" value="#{gestionUsuario.contrasenaUpdate}" required="true" />
+                <!-- Muestra los mensajes de error para el campo 'contrasena' -->
+                <h:message for="contrasena" style="color: red;" />
+                
+                <h:outputLabel for="contrasena2" value="Confirmar Contraseña:" />
+                <!-- Campo de entrada para la contraseña -->
+                <h:inputSecret id="contrasena2" value="#{gestionUsuario.confirmarContrasena}" required="true" />
+                <!-- Muestra los mensajes de error para el campo 'contrasena' -->
+                <h:message for="contrasena2" style="color: red;" />
+                
+                <h:outputLabel for="tipo" value="Tipo Usuario: "/>
+                <p:selectOneMenu id="tipo" value="#{gestionUsuario.usuario.tipoUsuario}" required="true">
+                    <f:selectItem itemLabel="Sacerdote" itemValue="Sacerdote" />
+                    <f:selectItem itemLabel="Secretario" itemValue="Secretario" />
+                </p:selectOneMenu>
+            <h:message for="tipo" />
+            
+            </h:panelGrid>
+            
+            <p:commandButton value="Guardar" action="${gestionUsuario.crearUsuario()}" update="grid"/>
+            <p:commandButton type="reset" value="Reset" />
+        </h:form>
+    </h:body>
+</html>
+

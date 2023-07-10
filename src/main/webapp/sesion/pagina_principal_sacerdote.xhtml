@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -28,7 +29,7 @@
 
                     <!-- Enlace para redirigir a la página de "Sacerdotes" -->
                     <li>
-                        <h:commandLink value="Sacerdotes" action="#{gestionPersonas.redirigirASacerdote()}" target="myframe" />
+                        <h:commandLink value="Sacerdotes" action="#{controlSacerdote.redirigirASacerdote()}" target="myframe" />
                     </li>
 
                     <!-- Enlace para redirigir a la página de "Direccion" -->
@@ -60,6 +61,29 @@
                     </ul>
                 </div>
             </ul>
+            
+            <h:form>
+                <p:submenu label="Users" icon="pi pi-fw pi-user">
+                    <h:outputText value="#{controlAcceso.obtenerNombreUsuario()}" />
+                    <p:commandButton value="Update" icon="pi pi-fw pi-user-plus" action="#{gestionUsuario.redireccionarEditar(gestionUsuario.usuarioLogin())}"/>
+                    <p:commandButton update="@form" process="@this" value="Delete" icon="pi pi-fw pi-user-minus" action="#{gestionUsuario.eliminarUsuario(gestionUsuario.usuarioLogin())}">
+                        <p:confirm header="Confirmation" 
+                                            message="Are you sure?"
+                                            icon="pi pi-exclamation-triangle" />
+                    </p:commandButton>
+                </p:submenu>
+            </h:form>
+            <!-- Cuadro de confirmación global -->
+            <p:confirmDialog global="true">
+                <p:commandButton value="Yes" type="button"
+                                 styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button"
+                                 styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>   
+            
+            <h:form id="logoutForm" prependId="false">
+                <h:commandButton value='Cerrar sesion' type="submit" action="#{controlAcceso.cerrarSesion()}"/>
+            </h:form>
         </header>
 
         <section class="contenedor" id="contenedor">
@@ -71,10 +95,7 @@
             </div>
         </section>
 
-        <h:form id="logoutForm" prependId="false">
-            <!-- Botón para cerrar sesión -->
-            <h:commandButton value='Cerrar sesión' type="submit" action="#{controlAcceso.cerrarSesion()}"/>
-        </h:form>
+        
     </h:body>
 
 </html>

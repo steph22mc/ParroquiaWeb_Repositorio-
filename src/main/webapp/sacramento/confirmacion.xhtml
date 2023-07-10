@@ -1,12 +1,150 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Registro de Confirmacion</title>
+        <link rel="stylesheet" href="css/pdf.css"></link>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+            <h1>Registros de Confirmacion</h1>
+            
+            <h:outputLabel value="Cantidad de registros: #{controlConfirmacion.cantidad.size()}" />
+            <h:outputLabel value="Resultado de Busqueda: #{controlConfirmacion.registros.size()}" />
+            
+            <h:inputText value="#{controlConfirmacion.busqueda}" disabled="#{controlConfirmacion.mostrandoTabla}" rendered="#{controlConfirmacion.estado eq 'buscando'}">
+                <f:validateLength minimum="4" />
+                <h:message for="inputSearch" style="color: red" />
+            </h:inputText>
+            <h:commandButton value="Buscar" action="#{controlConfirmacion.buscar}" disabled="#{controlConfirmacion.mostrandoTabla}" rendered="#{controlConfirmacion.estado eq 'buscando'}" />
+            
+            <p:commandButton action="#{controlConfirmacion.redireccionarCrear()}" value="Crear Confirmacion" immediate="true" />
+            
+            <br/><br/>
+            
+            <p:dataTable value="#{controlConfirmacion.registros}" var="confirmacion" rendered="#{controlConfirmacion.mostrandoTabla}">
+                <p:column headerText="Id">
+                    #{confirmacion.idConfirmacion}
+                </p:column>
+                <p:column headerText="Confirmado">
+                    #{confirmacion.persona}
+                </p:column>
+                <p:column headerText="Madre">
+                    #{confirmacion.madre}
+                </p:column>
+                <p:column headerText="Padre">
+                    #{confirmacion.padre}
+                </p:column>
+                <p:column headerText="Fecha">
+                    #{confirmacion.fechaConfirmacion}
+                </p:column>
+                <p:column headerText="Sacerdote">
+                    #{confirmacion.sacerdote}
+                </p:column>
+                
+                <p:column headerText="Acciones">
+                    <h:commandButton value="Actualizar" action="#{controlConfirmacion.redirigirEditar(confirmacion.idConfirmacion)}" />
+                    <!-- Botón "Ver" que abre el modal -->
+                    <a href="#" onclick="mostrarPopup('#{confirmacion.idConfirmacion}', '#{confirmacion.nombre_parroquia}', '#{confirmacion.padrinoMadrina}', '#{confirmacion.fechaConfirmacion}', '#{confirmacion.direccion}', '#{confirmacion.padre}', '#{confirmacion.madre}', '#{confirmacion.cedulaPersona}', '#{confirmacion.persona}', '#{confirmacion.sacerdote}'); return false;">Ver</a>
+                </p:column>
+            </p:dataTable>
+            
+            <h:commandButton value="Retroceder" action="#{controlConfirmacion.retroceder}" rendered="#{controlConfirmacion.mostrandoTabla}" />
+        </h:form>
+        
+        <div id="popup" class="popup">
+            <h2>Detalles de Confirmacion</h2>
+            <p>Id: <span id="idBautizo"></span></p>
+            <p>Cedula del Confirmado: <span id="cedulaPersona"></span></p>
+            <p>confirmado: <span id="confirmado"></span></p>
+            <p>Fecha: <span id="fecha"></span></p>
+            <p>Parroquia: <span id="parroquia"></span></p>
+            <p>Direccion: <span id="direccion"></span></p>
+            <p>Madre: <span id="madre"></span></p>
+            <p>Padre: <span id="padre"></span></p>
+            <p>Testigo: <span id="testigo"></span></p>
+            <p>Sacerdote: <span id="sacerdote"></span></p>
+
+            <button onclick="imprimirCertificado()">Imprimir</button>
+            <button onclick="generarPDF(); return false;">Descargar PDF</button>
+            <button onclick="cerrarPopup()">Cancelar</button>
+        </div>
+
+        <div id="overlay" class="overlay"></div>
+
+        <script>
+            function mostrarPopup(idConfirmacion, parroquia, testigo, fecha, direccion, padre, madre, cedula, confirmado, sacerdote) {
+                document.getElementById("idConfirmacion").textContent = idConfirmacion;
+                document.getElementById("fecha").textContent = fecha;
+                document.getElementById("parroquia").textContent = parroquia;
+                document.getElementById("direccion").textContent = direccion;
+                document.getElementById("testigo").textContent = testigo;
+                document.getElementById("padre").textContent = padre;
+                document.getElementById("madre").textContent = madre;
+                document.getElementById("cedulaPersona").textContent = cedula;
+                document.getElementById("confirmado").textContent = confirmado;
+                document.getElementById("sacerdote").textContent = sacerdote;
+
+                document.getElementById("popup").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
+            }
+
+            function cerrarPopup() {
+                document.getElementById("popup").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+            }
+
+            function generarPDF() {
+                var idConfirmacion = document.getElementById("idConfirmacion").textContent;
+                var fecha = document.getElementById("fecha").textContent;
+                var parroquia = document.getElementById("parroquia").textContent;
+                var direccion = document.getElementById("direccion").textContent;
+                var testigo = document.getElementById("testigo").textContent;
+                var padre = document.getElementById("padre").textContent;
+                var madre = document.getElementById("madre").textContent;
+                var cedulaPersona = document.getElementById("cedulaPersona").textContent;
+                var confirmado = document.getElementById("confirmado").textContent;
+                var sacerdote = document.getElementById("sacerdote").textContent;
+
+                // Construir el contenido del certificado en formato HTML
+                var contenido =
+                        `<div class="certificado-container">
+                  <h2 class="certificado-title">Certificado de Bautismo</h2>
+                  <div class="certificado-content">
+                    <p>Certificamos que <b>` +bautizado + `</b>ha sido bautizado en agua, en cumplimiento del mandato de nuestro señor Jesucristo.</p>
+                    <p>"Por tanto id y haced discípulos a todas las naciones bautizándolos en el nombre del Padre, del Hijo y del Espíritu Santo" Mateo 28:19.</p>
+                    <p>Dando así testimonio público de que renuncia a la vida antigua y afirma su fe en las enseñanzas de las Sagradas Escrituras.</p>
+                    <p>Expedido en <b>`+ parroquia +`</b> en <b>` + direccion + `</b> el <b>` + fecha +`</b>.</p>
+                    <p></p>
+                    <p>Madrina: <b>`+madrina+`</b></p>
+                    <p>Padrino: <b>` +padrino+`</b></p>
+                    <p>Sacerdote: <b>`+sacerdote+`</b></p>
+                  </div>
+                </div>`;
+
+                // Crear un elemento HTML temporal para convertir a PDF
+                var tempElement = document.createElement("div");
+                tempElement.innerHTML = contenido;
+
+                // Opciones de configuración para html2pdf
+                var options = {
+                    margin: [20, 20],
+                    filename: "certificado_bautismo.pdf",
+                    image: { type: "jpeg", quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { format: "a4", orientation: "landscape" }
+                };
+
+                // Generar el PDF utilizando html2pdf
+                html2pdf().set(options).from(tempElement).save();
+            }
+
+
+        </script>
     </h:body>
 </html>
 

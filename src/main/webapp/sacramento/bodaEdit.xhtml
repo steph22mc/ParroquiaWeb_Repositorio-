@@ -1,12 +1,81 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form id="crearBodaForm">
+            <div>
+                <p:growl id="growl" showDetail="true" />
+                <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+                <h:outputLabel for="fecha" value="Fecha de Boda: "  />
+                <p:calendar id="fecha" value="#{controlBoda.boda.fechaBoda}" required="true" pattern="yyyy-MM-dd" />
+                <h:message for="fecha" />
+
+                <h:outputLabel for="casado" value="Casado: " />
+                <p:autoComplete id="casado" value="#{controlBoda.boda.persona}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarPersonas}" scrollHeight="250"  />
+                <h:message for="casado" />
+
+                <h:outputLabel for="esposo" value="Esposo: " />
+                <p:autoComplete id="esposo" value="#{controlBoda.boda.esposo}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarEsposo}" scrollHeight="250"/>
+                <h:message for="esposo" />
+                
+                <h:outputLabel for="madreEsposo" value="Madre del Esposo: " />
+                <p:autoComplete id="madreEsposo" value="#{controlBoda.boda.madreEsposo}" 
+                                queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarMujeres}" scrollHeight="250"/>
+                <h:message for="madreEsposo" />
+                
+                <h:outputLabel for="padreEsposo" value="Padre del Esposo: " />
+                <p:autoComplete id="padreEsposo" value="#{controlBoda.boda.padreEsposo}" 
+                                queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarHombres}" scrollHeight="250"/>
+                <h:message for="madreEsposo" />
+                
+                <h:outputLabel for="esposa" value="Esposa: " />
+                <p:autoComplete id="esposa" value="#{controlBoda.boda.esposa}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarEsposa}" scrollHeight="250"/>
+                <h:message for="esposa" />
+                
+                <h:outputLabel for="madreEsposa" value="Madre de la Esposa: " />
+                <p:autoComplete id="madreEsposa" value="#{controlBoda.boda.madreEsposa}" 
+                                queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarMujeres}" scrollHeight="250"/>
+                <h:message for="madreEsposa" />
+                
+                <h:outputLabel for="padreEsposa" value="Padre de la Esposa: " />
+                <p:autoComplete id="padreEsposa" value="#{controlBoda.boda.padreEsposa}" 
+                                queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarHombres}" scrollHeight="250"/>
+                <h:message for="madreEsposa" />
+
+                <h:outputLabel for="testigo" value="Testigo: " />
+                <p:autoComplete id="testigo" value="#{controlBoda.boda.madrinaPadrino}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarTestigo}" scrollHeight="250" />
+                <h:message for="testigo" />
+
+                <h:outputLabel for="direccion" value="Direccion: " />
+                <p:autoComplete id="direccion" value="#{controlBoda.boda.direccion}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarDirecciones}" scrollHeight="250" />
+                <h:message for="direccion" />
+
+                <h:outputLabel for="parroquia" value="Parroquia: " />
+                <p:autoComplete id="parroquia" value="#{controlBoda.boda.parroquia}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarParroquia}" scrollHeight="250" />
+                <h:message for="parroquia" />
+
+                <h:outputLabel for="sacerdote" value="Sacerdote: " />
+                <p:autoComplete id="sacerdote" value="#{controlBoda.boda.sacerdote}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBoda.buscarSacerdote}" scrollHeight="250" />
+                <h:message for="sacerdote" />
+            </div>
+            
+            <p:commandButton value="Actualizar" action="#{controlBoda.actualizar()}"  />
+            <h:commandButton value="Cancelar" action="#{controlSacramento.redirigirABoda()}" immediate="true"/>
+            <h:commandButton value="Cancelar" action="#{gestionPersonas.redireccionarCrear()}" immediate="true"/>
+        </h:form>
     </h:body>
 </html>
 

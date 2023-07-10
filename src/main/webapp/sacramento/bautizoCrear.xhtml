@@ -8,38 +8,51 @@
     </h:head>
     <h:body>
         <h:form id="crearBautizoForm">
-            <h:outputLabel for="fecha" value="Fecha de Bautizo: "  />
-            <p:calendar id="fecha" value="#{controlBautizo.nuevaFecha}" required="true" pattern="yyyy-MM-dd" />
-            <h:message for="fecha" />
-            
-            
-            <h:outputLabel for="bautizado" value="Bautizado: " />
-            <p:autoComplete id="bautizado" value="#{controlBautizo.personaSeleccionada}" 
-                                completeMethod="#{controlBautizo.buscarPersonas}" scrollHeight="250" />
-                
+            <div>
+                <p:growl id="growl" showDetail="true" />
+                <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+                <h:outputLabel for="fecha" value="Fecha de Bautizo: "  />
+                <p:calendar id="fecha" value="#{controlBautizo.nuevaFecha}" required="true" pattern="yyyy-MM-dd" />
+                <h:message for="fecha" />
+
+                <h:outputLabel for="bautizado" value="Bautizado: " />
+                <p:autoComplete id="bautizado" value="#{controlBautizo.personaSeleccionada}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBautizo.buscarPersonas}" scrollHeight="250"  />
+                <h:message for="bautizado" />
+
                 <h:outputLabel for="madrina" value="Madrina: " />
                 <p:autoComplete id="madrina" value="#{controlBautizo.mujerSeleccionada}" 
-                                completeMethod="#{controlBautizo.buscarMujeres}" scrollHeight="250" />
-                
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBautizo.buscarMujeres}" scrollHeight="250"/>
+                <h:message for="madrina" />
+
                 <h:outputLabel for="padrino" value="Padrino: " />
                 <p:autoComplete id="padrino" value="#{controlBautizo.hombreSeleccionado}" 
-                                completeMethod="#{controlBautizo.buscarHombres}" scrollHeight="250" />
-                
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBautizo.buscarHombres}" scrollHeight="250" />
+                <h:message for="padrino" />
+
                 <h:outputLabel for="direccion" value="Direccion: " />
                 <p:autoComplete id="direccion" value="#{controlBautizo.direccionSeleccionada}" 
-                                completeMethod="#{controlBautizo.buscarDirecciones}" scrollHeight="250" />
-                
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBautizo.buscarDirecciones}" scrollHeight="250" />
+                <h:message for="direccion" />
+
                 <h:outputLabel for="parroquia" value="Parroquia: " />
                 <p:autoComplete id="parroquia" value="#{controlBautizo.parroquiaSeleccionada}" 
-                                completeMethod="#{controlBautizo.buscarParroquia}" scrollHeight="250" />
-                
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBautizo.buscarParroquia}" scrollHeight="250" />
+                <h:message for="parroquia" />
+
                 <h:outputLabel for="sacerdote" value="Sacerdote: " />
                 <p:autoComplete id="sacerdote" value="#{controlBautizo.sacerdoteSeleccionado}" 
-                                completeMethod="#{controlBautizo.buscarSacerdote}" scrollHeight="250" />
-                
-                
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlBautizo.buscarSacerdote}" scrollHeight="250" />
+                <h:message for="sacerdote" />
+            </div>
+            
             <p:commandButton value="Guardar" action="#{controlBautizo.crearBautizo()}"  />
-<p:commandButton type="reset" value="Reset" />
+            <p:commandButton type="reset" value="Reset" />
+            <p:commandButton value="Crear Persona" action="#{controlSacramento.redireccionarCrearPersona()}" immediate="true" />
+            <p:commandButton value="Crear Direccion" action="#{controlSacramento.redireccionarCrearDireccion()}" immediate="true" />
+            <p:commandButton value="Crear Parroquia" action="#{controlSacramento.redireccionarCrearParroquia()}"  immediate="true"/>
+            <p:commandButton value="Crear Sacerdote" action="#{controlSacramento.redireccionarCrearSacerdote()}"  immediate="true"/>
         </h:form>
     </h:body>
 </html>

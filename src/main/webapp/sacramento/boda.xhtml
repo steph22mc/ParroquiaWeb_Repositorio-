@@ -1,12 +1,159 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Registro de Boda</title>
+        <link rel="stylesheet" href="css/pdf.css"></link>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+            <h1>Registro de Boda</h1>
+            <h:outputLabel value="Cantidad de registros: #{controlBoda.cantidad.size()}" />
+            <h:outputLabel value="Resultado de Busqueda: #{controlBoda.registros.size()}" />
+        
+            <h:inputText value="#{controlBoda.busqueda}" disabled="#{controlBoda.mostrandoTabla}" rendered="#{controlBoda.estado eq 'buscando'}">
+                    <f:validateLength minimum="4" />
+                    <h:message for="inputSearch" style="color: red" />
+            </h:inputText>
+            <h:commandButton value="Buscar" action="#{controlBoda.buscar}" disabled="#{controlBoda.mostrandoTabla}" rendered="#{controlBoda.estado eq 'buscando'}" />
+            
+            <p:commandButton action="#{controlBoda.redireccionarCrear()}" value="Crear Boda"  />
+            
+            <br></br>
+            
+            <p:dataTable value="#{controlBoda.registros}" var="boda" rendered="#{controlBoda.mostrandoTabla}">
+                <p:column headerText="Id">
+                    #{boda.idBoda}
+                </p:column>
+                <p:column headerText="Esposo">
+                    #{boda.esposo}
+                </p:column>
+                <p:column headerText="Esposa">
+                    #{boda.esposa}
+                </p:column>
+                <p:column headerText="Testigo">
+                    #{boda.madrinaPadrino}
+                </p:column>
+                <p:column headerText="Fecha">
+                    #{boda.fechaBoda}
+                </p:column>
+                <p:column headerText="Sacerdote">
+                    #{boda.sacerdote}
+                </p:column>
+                
+                <p:column headerText="Acciones">
+                    <h:commandButton value="Actualizar" action="#{controlBoda.redirigirEditar(boda.idBoda)}" />
+                    <!-- Botón "Ver" que abre el modal -->
+                    <a href="#" 
+                       onclick="mostrarPopup('#{boda.idBoda}', '#{boda.fechaBoda}', '#{boda.parroquia}', '#{boda.direccion}', '#{boda.madrinaPadrino}', 
+                                '#{boda.esposa}', '#{boda.esposo}', '#{boda.madreEsposo}', '#{boda.padreEsposo}', '#{boda.madreEsposa}', '#{boda.padreEsposa}', '#{boda.sacerdote}', '#{boda.cedulaPersona}'); return false;">Ver</a>
+                </p:column>
+            </p:dataTable>
+            <h:commandButton value="Retroceder" action="#{controlBoda.retroceder}" rendered="#{controlBoda.mostrandoTabla}" />
+        </h:form>
+        
+         <div id="popup" class="popup">
+            <h2>Detalles de la Boda</h2>
+            <p>Id: <span id="idBoda"><b></b></span></p>
+            <p>Fecha: <span id="fecha"></span></p>
+            <p>Cedula del Casado: <span id="cedulaPersona"></span></p>
+            <p>Esposo: <span id="esposo"></span></p>
+            <p>Esposa: <span id="esposa"></span></p>
+            <p>Madre del Esposo: <span id="madreEsposo"></span></p>
+            <p>Padre del Esposo: <span id="padreEsposo"></span></p>
+            <p>Madre de la Esposa: <span id="madreEsposa"></span></p>
+            <p>Padre de la Esposa: <span id="padreEsposa"></span></p>
+            <p>Parroquia: <span id="parroquia"></span></p>
+            <p>Direccion: <span id="direccion"></span></p>
+            <p>Testigo: <span id="testigo"></span></p>
+            <p>Sacerdote: <span id="sacerdote"></span></p>
+
+            <button onclick="imprimirCertificado()">Imprimir</button>
+            <button onclick="generarPDF(); return false;">Descargar PDF</button>
+            <button onclick="cerrarPopup()">Cancelar</button>
+        </div>
+
+        <div id="overlay" class="overlay"></div>
+
+        <script>
+            function mostrarPopup(idBoda, fecha, parroquia, direccion, madrina, esposa, esposo, madreEsposo, padreEsposo, madreEsposa, padreEsposa, sacerdote, cedulaPersona) {
+                document.getElementById("idBoda").textContent = idBoda;
+                document.getElementById("fecha").textContent = fecha;
+                document.getElementById("parroquia").textContent = parroquia;
+                document.getElementById("direccion").textContent = direccion;
+                document.getElementById("testigo").textContent = madrina;
+                document.getElementById("esposa").textContent = esposa;
+                document.getElementById("esposo").textContent = esposo;
+                document.getElementById("padreEsposo").textContent = padreEsposo;
+                document.getElementById("madreEsposo").textContent = madreEsposo;
+                document.getElementById("madreEsposa").textContent = madreEsposa;
+                document.getElementById("padreEsposa").textContent = padreEsposa;
+                document.getElementById("sacerdote").textContent = sacerdote;
+                document.getElementById("cedula").textContent = cedulaPersona;
+
+                document.getElementById("popup").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
+            }
+
+            function cerrarPopup() {
+                document.getElementById("popup").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+            }
+
+            function generarPDF() {
+                var idBoda = document.getElementById("idBoda").textContent;
+                var fecha = document.getElementById("fecha").textContent;
+                var parroquia = document.getElementById("parroquia").textContent;
+                var direccion = document.getElementById("direccion").textContent;
+                var testigo = document.getElementById("testigo").textContent;
+                var esposa = document.getElementById("esposa").textContent;
+                var esposo = document.getElementById("esposo").textContent;
+                var padreEsposo = document.getElementById("padreEsposo").textContent;
+                var madreEsposo = document.getElementById("madreEsposo").textContent;
+                var madreEsposa = document.getElementById("madreEsposa").textContent;
+                var padreEsposa = document.getElementById("padreEsposa").textContent;
+                var sacerdote = document.getElementById("sacerdote").textContent;
+                var cedulaPersona = document.getElementById("cedula").textContent;
+
+                // Construir el contenido del certificado en formato HTML
+                var contenido =
+                        `<div class="certificado-container">
+                  <h2 class="certificado-title">Certificado de Boda</h2>
+                  <div class="certificado-content">
+                    <p>Certificamos que <b>` +bautizado + `</b>ha sido bautizado en agua, en cumplimiento del mandato de nuestro señor Jesucristo.</p>
+                    <p>"Por tanto id y haced discípulos a todas las naciones bautizándolos en el nombre del Padre, del Hijo y del Espíritu Santo" Mateo 28:19.</p>
+                    <p>Dando así testimonio público de que renuncia a la vida antigua y afirma su fe en las enseñanzas de las Sagradas Escrituras.</p>
+                    <p>Expedido en <b>`+ parroquia +`</b> en <b>` + direccion + `</b> el <b>` + fecha +`</b>.</p>
+                    <p></p>
+                    <p>Madrina: <b>`+madrina+`</b></p>
+                    <p>Padrino: <b>` +padrino+`</b></p>
+                    <p>Sacerdote: <b>`+sacerdote+`</b></p>
+                  </div>
+                </div>`;
+
+                // Crear un elemento HTML temporal para convertir a PDF
+                var tempElement = document.createElement("div");
+                tempElement.innerHTML = contenido;
+
+                // Opciones de configuración para html2pdf
+                var options = {
+                    margin: [20, 20],
+                    filename: "certificado_boda.pdf",
+                    image: { type: "jpeg", quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { format: "a4", orientation: "landscape" }
+                };
+
+                // Generar el PDF utilizando html2pdf
+                html2pdf().set(options).from(tempElement).save();
+            }
+
+
+        </script>
     </h:body>
 </html>
 

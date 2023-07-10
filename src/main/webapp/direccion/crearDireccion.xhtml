@@ -6,22 +6,24 @@
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:form>
-        <h:outputLabel for="nombreLugar" value="Nombre Lugar:" />
-        <p:inputText id="nombreLugar" value="#{direccionBean.nuevoNombreLugar}" required="true" />
-        <h:message for="nombreLugar" />
+    <h:body>
+        <h:form>
+            <h:outputLabel for="nombreLugar" value="Nombre Lugar:" />
+            <p:inputText id="nombreLugar" value="#{direccionBean.nuevoNombreLugar}" required="true" />
+            <h:message for="nombreLugar" />
 
-        <h:outputLabel for="provincia" value="Provincia:" />
-        <p:inputText id="provincia" value="#{direccionBean.nuevaProvincia}" required="true" />
-        <h:message for="provincia" />
+            <h:outputLabel for="provincia" value="Provincia:" />
+            <p:inputText id="provincia" value="#{direccionBean.nuevaProvincia}" required="true" />
+            <h:message for="provincia" />
 
-        <h:outputLabel for="distrito" value="Distrito:" />
-        <p:inputText id="distrito" value="#{direccionBean.nuevoDistrito}" required="true" />
-        <h:message for="distrito" />
+            <h:outputLabel for="distrito" value="Distrito:" />
+            <p:inputText id="distrito" value="#{direccionBean.nuevoDistrito}" required="true" />
+            <h:message for="distrito" />
 
-        <p:commandButton value="Guardar" action="#{direccionBean.crearDireccion()}" />
-        <p:commandButton type="reset" value="Reset" />
-    </h:form>
+            <p:commandButton value="Guardar" action="#{direccionBean.crearDireccion()}" />
+            <p:commandButton type="reset" value="Reset" />
+        </h:form>
+    </h:body>
 
 </html>
 

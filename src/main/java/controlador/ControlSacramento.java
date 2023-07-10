@@ -31,6 +31,25 @@ public class ControlSacramento {
         this.iframeSrc = iframeSrc;
     }
     
+    public void redireccionarCrearPersona() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        redirigir("/personas/crearPersona.xhtml");
+    }
+    
+    public void redireccionarCrearDireccion() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        redirigir("/direccion/crearDireccion.xhtml");
+    }
+    
+    public void redireccionarCrearParroquia() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        redirigir("/parroquia/crearParroquia.xhtml");
+    }
+    
+    public void redireccionarCrearSacerdote() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        redirigir("/sacerdote/crearSacerdote.xhtml");
+    }
     
     public void redirigirABautizo() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();

@@ -1,12 +1,67 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form>
+            <div>
+                <p:growl id="growl" showDetail="true" />
+                <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+
+                <h:outputLabel for="fecha" value="Fecha de Confirmacion: "  />
+                <p:calendar id="fecha" value="#{controlConfirmacion.nuevaFecha}" required="true" pattern="yyyy-MM-dd" />
+                <h:message for="fecha" />
+
+                <h:outputLabel for="confirmado" value="Confirmado: " />
+                <p:autoComplete id="confirmado" value="#{controlConfirmacion.personaSeleccionada}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlConfirmacion.buscarPersonas}" scrollHeight="250"  />
+                <h:message for="confirmado" />
+
+                <h:outputLabel for="testigo" value="Testigo: " />
+                <p:autoComplete id="testigo" value="#{controlConfirmacion.testigoSeleccionado}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlConfirmacion.buscarTestigo}" scrollHeight="250" />
+                <h:message for="testigo" />
+
+                <h:outputLabel for="padre" value="Padre: " />
+                <p:autoComplete id="padre" value="#{controlConfirmacion.hombreSeleccionado}" 
+                                queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlConfirmacion.buscarHombres}" scrollHeight="250" />
+                <h:message for="padre" />
+                
+                <h:outputLabel for="madre" value="Madre: " />
+                <p:autoComplete id="madre" value="#{controlConfirmacion.mujerSeleccionada}" 
+                                queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlConfirmacion.buscarMujeres}" scrollHeight="250" />
+                <h:message for="madre" />
+
+                <h:outputLabel for="direccion" value="Direccion: " />
+                <p:autoComplete id="direccion" value="#{controlConfirmacion.direccionSeleccionada}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlConfirmacion.buscarDirecciones}" scrollHeight="250" />
+                <h:message for="direccion" />
+
+                <h:outputLabel for="parroquia" value="Parroquia: " />
+                <p:autoComplete id="parroquia" value="#{controlConfirmacion.parroquiaSeleccionada}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlConfirmacion.buscarParroquia}" scrollHeight="250" />
+                <h:message for="parroquia" />
+
+                <h:outputLabel for="sacerdote" value="Sacerdote: " />
+                <p:autoComplete id="sacerdote" value="#{controlConfirmacion.sacerdoteSeleccionado}" 
+                                required="true" queryDelay="1000" cache="true" emptyMessage="No results" maxResults="10" completeMethod="#{controlConfirmacion.buscarSacerdote}" scrollHeight="250" />
+                <h:message for="sacerdote" />
+            </div>
+            
+            <p:commandButton value="Guardar" action="#{controlConfirmacion.crearConfirmacion()}"  />
+            <p:commandButton type="reset" value="Reset" />
+            <div>
+                <p:commandButton value="Crear Persona" action="#{gestionPersonas.redireccionarCrear()}" immediate="true" />
+                <p:commandButton value="Crear Persona" action="#{controlSacramento.redireccionarCrearPersona()}" immediate="true" />
+                <p:commandButton value="Crear Direccion" action="#{controlSacramento.redireccionarCrearDireccion()}" immediate="true" />
+                <p:commandButton value="Crear Parroquia" action="#{controlSacramento.redireccionarCrearParroquia()}"  immediate="true"/>
+                <p:commandButton value="Crear Sacerdote" action="#{controlSacramento.redireccionarCrearSacerdote()}"  immediate="true"/>
+            </div>
+        </h:form>
     </h:body>
 </html>
 
