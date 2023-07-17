@@ -149,56 +149,56 @@ public class ResetPasswordBean implements Serializable{
      * @throws IOException si ocurre un error al redirigir la página.
      */
     public void resetPassword() throws IOException {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        if (showHashMismatchMessage) {
-            // Si hay un error de hash, redirigir a la página de error
-            ExternalContext externalContext = facesContext.getExternalContext();
-                externalContext.redirect(externalContext.getRequestContextPath() + "/sesion/invalite_gmail.xhtml");
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    PasswordEncrypt md = new PasswordEncrypt();
+
+    if (newPassword == null || newPassword.trim().isEmpty() || confirmPassword == null || confirmPassword.trim().isEmpty()) {
+        // Si las contraseñas están vacías, mostrar mensaje de error
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error: Las contraseñas no pueden estar vacías", "Las contraseñas no pueden estar vacías");
+        facesContext.addMessage(null, message);
+    } else if (!newPassword.equals(confirmPassword)) {
+        // Si las contraseñas no coinciden, mostrar mensaje de error
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Las contraseñas no coinciden", "Las contraseñas no coinciden");
+        facesContext.addMessage(null, message);
+    }
+    else {
+        if(!newPassword.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-=_+])[a-zA-Z0-9!@#$%^&*()-=_+]{8,}$")){
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: La contraseña no cumple con los requisitos.", "La contraseña no cumple con los requisitos.");
+            facesContext.addMessage(null, message);
+            return;
         }
-        showResetForm = true;
+        try {
+            Connection con = Conexion.getConnection("Sacerdote");
+            String hashedPassword = md.encriptarContrasena(newPassword);
+            PreparedStatement st = con.prepareStatement("UPDATE TB_Usuario SET Contrasena=? WHERE Id_Usuario=?");
+            st.setString(1, hashedPassword);
+            st.setInt(2, profileId);
+            st.executeUpdate();
 
-        PasswordEncrypt md = new PasswordEncrypt();
+            String sql = "DELETE FROM Reset_Password WHERE Id_Usuario = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, profileId);
 
-        if (newPassword == null || newPassword.trim().isEmpty() || confirmPassword == null || confirmPassword.trim().isEmpty()) {
-            // Si las contraseñas están vacías, mostrar mensaje de error
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Las contraseñas no pueden estar vacías", "Las contraseñas no pueden estar vacías");
-            facesContext.addMessage(null, message);
-        } else if (!newPassword.equals(confirmPassword)) {
-            // Si las contraseñas no coinciden, mostrar mensaje de error
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden");
-            facesContext.addMessage(null, message);
-        } else {
-            try {
-                Connection con = Conexion.getConnection("Sacerdote");
-                String hashedPassword = md.encriptarContrasena(newPassword);
-                PreparedStatement st = con.prepareStatement("UPDATE TB_Usuario SET Contrasena=? WHERE Id_Usuario=?");
-                st.setString(1, hashedPassword);
-                st.setInt(2, profileId);
-                st.executeUpdate();
-
-                String sql = "DELETE FROM Reset_Password WHERE Id_Usuario = ?";
-                PreparedStatement statement = con.prepareStatement(sql);
-                statement.setInt(1, profileId);
-
-                int rowsDeleted = statement.executeUpdate();
-                if (rowsDeleted > 0) {
-                    System.out.println("Perfil de restablecimiento de contraseña eliminado correctamente.");
-                } else {
-                    System.out.println("No se encontró un perfil de restablecimiento de contraseña con el perfil ID especificado.");
-                }
-
-                // Establecer showResetForm en true después del restablecimiento de contraseña
-                showResetForm = true;
-
-                // Redireccionar a la página de inicio de sesión
-                ExternalContext externalContext = facesContext.getExternalContext();
-                externalContext.redirect(externalContext.getRequestContextPath() + "/sesion/update_reset.xhtml");
-            } catch (SQLException se) {
-                se.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Perfil de restablecimiento de contraseña eliminado correctamente.");
+            } else {
+                System.out.println("No se encontró un perfil de restablecimiento de contraseña con el perfil ID especificado.");
             }
+
+            // Establecer showResetForm en true después del restablecimiento de contraseña
+            showResetForm = true;
+
+            // Redireccionar a la página de inicio de sesión
+            ExternalContext externalContext = facesContext.getExternalContext();
+            externalContext.redirect(externalContext.getRequestContextPath() + "/sesion/update_reset.xhtml");
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+}
+
      
 }

@@ -3,28 +3,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Invalite Gmail</title>
+        <!--=============== Icon Page ===============-->
+        <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/1680/1680012.png" type="image/x-icon"></link>
+        
+        <!--=============== BOXICONS ===============-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"></link>
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="css/gmail_message.css"></link>
     </h:head>
     <h:body>
-        <h:panelGroup>
-            <h:form>
-                <h:panelGroup>
-                    <div class="img_error">
+        
+        <h:form>
+            <section class="modal container">
+                <div class="modal__container" id="modal-container">
+                    <div class="modal__content">
+                        <div class="modal__close close-modal" title="Close">
+                            <h:commandLink action="#{resetController.redirigirAForgotPassword()}" class='bx bx-x' immediate="true">
+<!--                                <i class='bx bx-x' ></i>-->
+                            </h:commandLink>
+                        </div>
 
+                        <div class="img_error modal__img">
+
+                        </div>
+
+                        <h1 class="modal__title">Intentar otra vez!</h1>
+                        <p class="modal__description">Ingrese una dirección de correo electrónico válida</p>
+                        <br></br>
+                        <h:commandButton class="modal__button modal__button-width" value="OK" action="#{resetController.redirigirAForgotPassword()}" immediate="true" />
                     </div>
-
-                    <h:panelGroup>
-                        <h1>Intentar otra vez </h1>
-                        <p>Ingrese la dirección de correo electrónico válida</p>
-
-                        <h:panelGroup>
-                            <h:commandLink value="OK" action="#{resetController.redirigirAForgotPassword()}" immediate="true"/>
-                        </h:panelGroup>
-                    </h:panelGroup>
-                    <h:commandLink action="#{resetController.redirigirAForgotPassword()}" immediate="true">X</h:commandLink>
-                </h:panelGroup>
-            </h:form>
-        </h:panelGroup>
+                </div>
+            </section>
+        </h:form>
     </h:body>
 </html>
 

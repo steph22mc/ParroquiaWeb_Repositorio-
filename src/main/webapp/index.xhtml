@@ -3,14 +3,192 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <title>My Church</title>
+        <!--=============== Icon Page ===============-->
+        <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/3450/3450820.png" type="image/x-icon"></link>
+        <!--=============== Font Awesome ===============-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></link>
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="css/style_index.css" ></link>
+        <!--=============== BoxIcons ===============-->
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"></link>
+
+        <!--=============== ScrollReveal ===============-->
+        <script src="https://unpkg.com/scrollreveal"></script>
     </h:head>
     <h:body>
-        <h1>Hello World! HUH</h1>
-        <h:form>
-            <h:commandButton value="Ingresar" action="#{controlAcceso.redirigirAlLogin()}" />
-        </h:form>
-        <br />   
+        <!--Loader, aparece al inicio de la pagina durante 5s-->
+        <div class="loader-wrapper">
+            <div class="pixel">
+
+            </div>
+            <h1 class="Logo-Text">
+                <span class="logo-parts">M</span>
+                <span class="logo-parts">Y</span>
+                <span class="logo-parts">C</span>
+                <span class="logo-parts">H</span>
+                <span class="logo-parts">U</span>
+                <span class="logo-parts">R</span>
+                <span class="logo-parts">C</span>
+                <span class="logo-parts">H</span>
+            </h1>
+            <p>
+                ¡Bienvenidos a nuestra página web!
+            </p>
+        </div>
+        
+        <header>
+            <nav class="navbar">
+                <div class="logo-img">
+                    <div class="img-navbar"></div>
+                    <a href="#" class="logo">MyChurch</a>
+                </div>
+            <div class="menu">
+                <div class="btn">
+                    <i class="fas fa-times close-btn"></i>
+                </div>
+                <a href="#services">
+                    About
+                </a>
+                <a href="#contact">
+                    Contact
+                </a>
+                <h:form>
+                    <h:commandLink class="a-login" action="#{controlAcceso.redirigirAlLogin()}">
+                        Login
+                    </h:commandLink>
+                </h:form>
+            </div>
+            <div class="btn">
+                <i class="fas fa-bars menu-btn"></i>
+            </div>
+            </nav>
+
+            <section id="home" class="home container">
+                <div class="home-img img-x">
+                    <img class="imgHome2" src="https://images.unsplash.com/photo-1469228252629-cbe7cb7db2c8?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1373&amp;q=80" />
+                </div>
+                <div class="home-content">
+                    <h2 class="title-x">MyChurch</h2>
+                    <p>El sistema de gestión de sacramentos
+                        es la solución que han estado
+                        esperando las Parroquias para poder
+
+                        administrar las actas sacramentales y 
+                        gestionar la información de la iglesia.
+                        El software opera 100% en la web, no es
+                        necesario instalar nada.
+                        Te invitamos
+                        a navegar en las diferentes secciones que
+                        tiene este sitio.
+                    </p>
+                    <h:form class="login-button">
+                            <h:commandLink class="btn-login" value="Acceder" action="#{controlAcceso.redirigirAlLogin()}" />
+                    </h:form>
+                </div>
+            </section>
+        </header>
+        
+        <div class="divMain">
+            <main>
+                <!--Seccion 'Qué es'-->
+                <section class="services container" id="services">
+                    <div class="services-content">
+                        <div class="card">
+                            <div class="img-box">
+                                <div class="img n1"></div>
+                            </div>
+
+                            <div class="content-card">
+                                <h2 class="title">Qué es</h2>
+                                <p>El programa de gestión de sacramentos, es un software destinado a brindar ayuda a las parroquias que
+                                    necesiten tener los archivos sacramentales informatizados. </p>
+                            </div>
+
+                        </div>
+
+                        <div class="card">
+                            <div class="img-box">
+                                <div class="img n2"></div>
+                            </div>
+
+                            <div class="content-card">
+                                <h2 class="title">Misión</h2>
+                                <p class="description">Nuestra misión es permitir a las Parroquias organizar, cuidar y conservar todos sus documentos
+                                    sacramentales.</p>
+                            </div>
+                        </div>
+
+
+                        <div class="card">
+                            <div class="img-box">
+                                <div class="img n3"></div>
+                            </div>
+
+
+                            <div class="content-card">
+                                <h2 class="title">Visión</h2>
+                                <p>Nuestra visión es brindar apoyo a las Parroquias en la administración de las actas sacramentales a
+                                    través de un excelente software.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <footer id="contact" class="footer">
+                <section class="contact container">
+                    <div class="contacto_text">
+                        <div class="box">
+                            <figure>
+                                <a href="#">
+                                    <img src="img/church.png"></img>
+                                </a>
+                            </figure>
+                        </div>
+
+                        <div class="box">
+                            <h1>Quienes Somos</h1>
+                            <div class="info">
+                                <p>Evangelion cuenta con un grupo de estudiantes que están dispuestos a brindarles ayuda a las iglesias y a
+                                    los
+                                    párrocos a digitalizarse para aprovechar las bondades que la tecnología ofrece hoy en día.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="box">
+                            <h2>Siguenos</h2>
+                            <div class="red-social">
+                                <i class="fa-brands fa-instagram"></i>
+                                <i class="fa-brands fa-facebook"></i>
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grupo-2">
+                        <small>&copy;2023<b> My Church</b>- Todos los Derechos Reservados.</small>
+                    </div>
+                </section>
+            </footer>
+        </div>
+        <!--=============== JS Page ===============-->
+        <script src="https://unpkg.com/scrollreveal@3.3.2/dist/scrollreveal.min.js"></script>
+        <script type="text/javascript" src="js/nabvar.js"></script>
+        <script type="text/javascript" src="js/loader.js"></script>
+        
+        <!--=============== JS Scroll ===============-->
+        <script>
+
+            window.sr = ScrollReveal({ reset: true });
+
+            // Customizing a reveal set
+            sr.reveal('p', {opacity: 0.9,duration:3000});
+            sr.reveal('.services', {opacity: 0.9,duration:3000});
+            sr.reveal('i', {opacity: 0.9,duration:3000});
+
+        </script>
+        
     </h:body>
 </html>
 

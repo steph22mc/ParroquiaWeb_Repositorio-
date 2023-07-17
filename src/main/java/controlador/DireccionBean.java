@@ -17,7 +17,10 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.servlet.http.HttpSession;
 import modeloDao.UsuarioDao;
 
@@ -147,6 +150,7 @@ public class DireccionBean implements Serializable{
      * Método para actualizar los datos de una dirección en la base de datos.
      */
     public void actualizarDireccion() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
         // Realizar la actualización de los datos en la base de datos utilizando el objeto DireccionDao
         direccionDao.update(direccion);
 
@@ -155,7 +159,8 @@ public class DireccionBean implements Serializable{
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             redirigir("/direccion/direccion.xhtml");
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(DireccionBean.class.getName()).log(Level.SEVERE, "Error en la actualización", e);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "No se pudo realizar la actualización"));
         }
     }
     
@@ -164,9 +169,9 @@ public class DireccionBean implements Serializable{
      */
     public void crearDireccion() {
         Direccion nuevaDireccion = new Direccion();
-        nuevaDireccion.setNombreLugar(nuevoNombreLugar);
-        nuevaDireccion.setProvincia(nuevaProvincia);
-        nuevaDireccion.setDistrito(nuevoDistrito);
+        nuevaDireccion.setNombreLugar(nuevoNombreLugar.trim());
+        nuevaDireccion.setProvincia(nuevaProvincia.trim());
+        nuevaDireccion.setDistrito(nuevoDistrito.trim());
 
         // Lógica para guardar la nueva dirección en la base de datos
         direccionDao.insert(nuevaDireccion);
@@ -203,7 +208,9 @@ public class DireccionBean implements Serializable{
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             redirigir("/direccion/direccion.xhtml");
         } catch (IOException e) {
-            e.printStackTrace();
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            Logger.getLogger(DireccionBean.class.getName()).log(Level.SEVERE, "Error al eliminar datos", e);
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "No se pudo realizar la actualización"));
         }
     }
 

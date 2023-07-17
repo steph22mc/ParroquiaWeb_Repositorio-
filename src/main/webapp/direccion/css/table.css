@@ -1,0 +1,77 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07/16/2023, 01:55:57 PM
+    Author     : DELL
+*/
+/* Estilos para la tabla */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body{
+    background: none;
+}
+
+.table-responsive {
+    background-color: #E4E9F7;
+}
+
+.direccion{
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background: #E4E9F7;
+}
+
+.bautizo form{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.search{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    margin: 10px 0;
+}
+
+.table-style {
+  width: 100% !important;
+  margin-bottom: 20px !important;
+  border-collapse: collapse !important;
+}
+
+.table-style th,
+.table-style td {
+  padding: 10px !important;
+  border: 1px solid #D6D6D6 !important;
+}
+
+/* Estilos para la cabecera de la tabla */
+.table-style th {
+  background-color: #0B162C !important;
+  color: #FFFFFF !important;
+  font-weight: bold !important;
+}
+
+/* Estilos para las celdas de datos */
+.table-style td {
+  text-align: center !important;
+}
+
+/* Estilos para los botones de la tabla */
+.table-style .ui-button {
+  margin-right: 5px !important;
+}
+

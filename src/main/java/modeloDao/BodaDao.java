@@ -31,44 +31,53 @@ public class BodaDao {
     }
 
     public List<Boda> getAll() {
+        List<Boda> bodas = new ArrayList<>();
+    
+    try {
+        
+        // Crea la consulta SQL
         String query = "CALL LISTAR_BODA()";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet resultSet = statement.executeQuery();
-
-            List<Boda> bodas = new ArrayList<>();
-            while (resultSet.next()) {
-                Boda boda = new Boda();
-                boda.setIdBoda(resultSet.getInt("Id_Boda"));
-                boda.setIdEsposo(resultSet.getString("Id_Esposo"));
-                boda.setEsposo(resultSet.getString("Esposo"));
-                boda.setIdEsposa(resultSet.getString("Id_Esposa"));
-                boda.setEsposa(resultSet.getString("Esposa"));
-                boda.setFechaBoda(resultSet.getDate("Fecha_Boda"));
-                boda.setIdDireccion(resultSet.getInt("Id_Direccion"));
-                boda.setDireccion(resultSet.getString("Direccion")); 
-                boda.setIdParroquia(resultSet.getInt("Id_Parroquia"));
-                boda.setParroquia(resultSet.getString("Nombre_Parroquia"));
-                boda.setIdPadrino(resultSet.getString("Id_Padrino"));
-                boda.setMadrinaPadrino(resultSet.getString("Madrina_Padrino"));
-                boda.setIdMadreEsposo(resultSet.getString("Id_Madre_Esposo"));
-                boda.setMadreEsposo(resultSet.getString("Madre_Esposo")); 
-                boda.setIdPadreEsposo(resultSet.getString("Id_Padre_Esposo"));
-                boda.setPadreEsposo(resultSet.getString("Padre_Esposo")); 
-                boda.setIdMadreEsposa(resultSet.getString("Id_Madre_Esposa"));
-                boda.setMadreEsposa(resultSet.getString("Madre_Esposa"));
-                boda.setIdPadreEsposa(resultSet.getString("Id_Padre_Esposa"));
-                boda.setPadreEsposa(resultSet.getString("Padre_Esposa"));
-                boda.setCedulaPersona(resultSet.getString("Cedula_Persona"));
-                boda.setPersona(resultSet.getString("Persona"));
-                boda.setIdSacerdote(resultSet.getInt("Id_Sacerdote"));
-                boda.setSacerdote(resultSet.getString("Sacerdote"));
-                bodas.add(boda);
-            }
-            return bodas;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+        
+        while (resultSet.next()) {
+            Boda boda = new Boda();
+            boda.setIdBoda(resultSet.getInt("Id_Boda"));
+            boda.setIdEsposo(resultSet.getString("Id_Esposo"));
+            boda.setEsposo(resultSet.getString("Esposo"));
+            boda.setIdEsposa(resultSet.getString("Id_Esposa"));
+            boda.setEsposa(resultSet.getString("Esposa"));
+            boda.setFechaBoda(resultSet.getDate("Fecha_Boda"));
+            boda.setIdDireccion(resultSet.getInt("Id_Direccion"));
+            boda.setDireccion(resultSet.getString("Direccion"));
+            boda.setIdParroquia(resultSet.getInt("Id_Parroquia"));
+            boda.setParroquia(resultSet.getString("Nombre_Parroquia"));
+            boda.setIdPadrino(resultSet.getString("Id_Padrino"));
+            boda.setMadrinaPadrino(resultSet.getString("Madrina_Padrino"));
+            boda.setIdMadreEsposo(resultSet.getString("Id_Madre_Esposo"));
+            boda.setMadreEsposo(resultSet.getString("Madre_Esposo"));
+            boda.setIdPadreEsposo(resultSet.getString("Id_Padre_Esposo"));
+            boda.setPadreEsposo(resultSet.getString("Padre_Esposo"));
+            boda.setIdMadreEsposa(resultSet.getString("Id_Madre_Esposa"));
+            boda.setMadreEsposa(resultSet.getString("Madre_Esposa"));
+            boda.setIdPadreEsposa(resultSet.getString("Id_Padre_Esposa"));
+            boda.setPadreEsposa(resultSet.getString("Padre_Esposa"));
+            boda.setPersona(resultSet.getString("Persona"));
+            boda.setIdSacerdote(resultSet.getInt("Id_Sacerdote"));
+            boda.setSacerdote(resultSet.getString("Sacerdote"));
+            
+            bodas.add(boda);
         }
-        return null;
+        
+        resultSet.close();
+        statement.close();
+        connection.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    
+    return bodas;
     }
 
     public void insert(Boda boda) {

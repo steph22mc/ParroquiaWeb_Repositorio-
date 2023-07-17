@@ -1,0 +1,162 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07/15/2023, 01:20:07 PM
+    Author     : DELL
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap');
+
+:root {
+    /*========== Colors ==========*/
+    /*Color mode HSL(hue, saturation, lightness)*/
+    --white-color: hsl(0, 0%, 100%);
+    --black-color: hsl(0, 0%, 0%);
+    --title-color: #BA2046;
+    --color-gris: #D6D6D6;
+    --color-dorado: #D4AF37;
+    /*========== Font and typography ==========*/
+    /*.5rem = 8px | 1rem = 16px ...*/
+    --body-font: "Oswald", sans-serif;
+    --sub-font: "PT Sans Narrow", sans-serif;
+    --h1-font-size: 1.75rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .813rem;
+    /*========== Font weight ==========*/
+    --font-medium: 500;
+    --main-color: #0B162C;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('https://th.bing.com/th/id/R.d4ac4dd1a49cddfad8344a09ef055ba0?rik=t%2bcIeYQwlh13vw&riu=http%3a%2f%2fwww.spotcatch.net%2fimages%2freiseberichte%2fisland-iceland%2fbudir-kirche.jpg&ehk=329tY8%2fjJvbMNi0do2H30za0ZhKaFTiYy4k30pAUSRA%3d&risl=&pid=ImgRaw&r=0');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+body, input{
+    font-size: var(--normal-font-size);
+    font-family: var(--body-font);
+}
+
+input, button{
+    border: none;
+    outline: none;
+}
+
+.lock-icon{
+    color: var(--white-color);
+    text-align: center;
+    font-size: 3rem;
+}
+
+/*=============== FORGOT ===============*/
+.forgot{
+    position: relative;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    background-color: rgba(6, 12, 37, 0.4);
+    color: white;
+}
+
+.forgot_sub_tittle{
+    font-size: 1rem;
+    font-family: var(--sub-font);
+}
+
+.forgot__form{
+    position: relative;
+    margin-inline: 1.5rem;
+    padding: 2.5rem 1.5rem;
+}
+
+.forgot__title{
+    text-align: center;
+    font-size: var(--h1-font-size);
+    font-weight: var(--font-medium);
+    margin-bottom: 2rem;
+}
+
+.forgot__content{
+    row-gap: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.forgot__box-input {
+    position: relative;
+}
+
+.back .forgot__login{
+    color: var(--title-color);
+    font-family: var(--sub-font);
+}
+
+.back{
+    font-family: var(--sub-font);
+    font-size: 1.2rem;
+}
+
+
+input [type="email"] {
+    box-sizing: border-box;
+    border: solid 2px lightgrey;
+    border-radius: 5px;
+    outline: none;
+}
+
+input[type="email"][pattern]:focus:invalid {
+    border-color: red;
+}
+
+input[type="email"][pattern]:focus:valid {
+    border-color: blue;
+}
+
+.back{
+    padding: 20px 0;
+}
+
+.btn{
+    background-color: #0B162C;
+    border: none;
+    transition: .2s;
+}
+
+.btn:hover{
+    transform: scale(1.1);
+    background-color: #0B162C;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For medium devices */
+@media screen and (min-width: 576px) {
+    .forgot {
+        justify-content: center;
+    }
+
+    .forgot__form {
+        width: 432px;
+        padding: 4rem 3rem 3.5rem;
+        border-radius: 1.5rem;
+    }
+
+    .forgot__title {
+        font-size: 2rem;
+        color: white;
+        font-family: var(--body-font);
+    }
+}
+

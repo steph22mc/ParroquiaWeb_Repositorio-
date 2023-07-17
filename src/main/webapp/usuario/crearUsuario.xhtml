@@ -8,7 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id='createForm'>
             <h:panelGrid id="grid" columns="3" cellpadding="7">
                 <h:outputLabel for="nombreUser" value="Nombre:" />
                 <p:inputText id="nombreUser" value="#{gestionUsuario.nuevoNombre}" required="true" />
@@ -45,7 +45,7 @@
             
             </h:panelGrid>
             
-            <p:commandButton value="Guardar" action="${gestionUsuario.crearUsuario()}" update="grid"/>
+            <p:commandButton value="Guardar" action="#{gestionUsuario.crearUsuario()}" update="createForm"/>
             <p:commandButton type="reset" value="Reset" />
         </h:form>
     </h:body>

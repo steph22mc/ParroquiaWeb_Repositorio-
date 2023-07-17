@@ -13,7 +13,7 @@
             <f:event listener="#{controlSacerdote.cargarSacerdotes()}" type="preRenderView"/>
         </f:metadata>
         
-        <h:form>
+        <h:form id="editForm">
             <h:outputLabel for="rango" value="Rango: "/>
             <p:selectOneMenu id="rango" value="#{controlSacerdote.sacerdote.rango}" required="true">
                     <f:selectItem itemLabel="Diacono" itemValue="Diacono" />
@@ -27,7 +27,7 @@
                             required="true" completeMethod="#{controlSacerdote.buscarPersonas}" scrollHeight="250"/>
             <h:message for="sacerdote" />
             
-            <p:commandButton value="Guardar" action="#{controlSacerdote.actualizar()}"  />
+            <p:commandButton value="Guardar" action="#{controlSacerdote.actualizar()}" update="editForm" />
             <p:commandButton type="reset" value="Reset" />
         </h:form>
     </h:body>

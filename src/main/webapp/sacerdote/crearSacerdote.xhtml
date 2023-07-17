@@ -8,7 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id="createForm">
             <h:outputLabel for="rango" value="Rango: "/>
             <p:selectOneMenu id="rango" value="#{controlSacerdote.nuevoRango}" required="true">
                     <f:selectItem itemLabel="Diacono" itemValue="Diacono" />
@@ -22,8 +22,7 @@
                             required="true" completeMethod="#{controlSacerdote.buscarPersonas}" scrollHeight="250"/>
             <h:message for="sacerdote" />
             
-            <p:commandButton value="Guardar" action="#{controlSacerdote.crearSacerdote()}"  />
-            <p:commandButton type="reset" value="Reset" />
+            <p:commandButton value="Guardar" action="#{controlSacerdote.crearSacerdote()}" update="createForm" />
             <h:commandButton value="Crear Persona" action="#{controlSacramento.redireccionarCrearPersona()}" immediate="true" />
         </h:form>
     </h:body>

@@ -5,47 +5,69 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"></link>
+        <link rel="stylesheet" href="css/table.css" ></link>
     </h:head>
     <h:body>
-        <h:form>
-            <p:inputText id="searchInput" value="#{direccionBean.searchText}" />
-            <p:commandButton value="Buscar" action="#{direccionBean.buscarDirecciones}" update="tablaDirecciones" />
-            <p:commandButton value="Crear Registro" action="#{direccionBean.redireccionarCrear()}" />
-            <p:dataTable value="#{direccionBean.direcciones}" var="direccion"
-                          id="tablaDirecciones" paginator="true" rows="7">
-                <p:column headerText="Nombre Lugar">
-                    #{direccion.nombreLugar}
-                </p:column>
-                <p:column headerText="Provincia">
-                    #{direccion.provincia}
-                </p:column>
-                <p:column headerText="Distrito">
-                    #{direccion.distrito}
-                </p:column>
-                <p:column headerText="Acciones">
-                    <p:commandButton icon="pi pi-pencil" title="Actualizar"
-                                     action="#{direccionBean.redireccionarEditar(direccion.idDireccion)}"
-                                     update="tablaDirecciones" process="@this" />
-                    
-                    <!-- Botón de eliminación con cuadro de confirmación -->
-                        <p:commandButton id="deleteButton" value="Eliminar" title="Eliminar" rendered="#{direccionBean.sacerdoteTrue}" 
-                                                     action="#{direccionBean.eliminarDireccion(direccion.idDireccion)}">
-                             <p:confirm header="Confirmation" 
-                                        message="Are you sure?"
-                                        icon="pi pi-exclamation-triangle" />
-                        </p:commandButton>
-                    
-                </p:column> 
-            </p:dataTable>
-             
+        <div class="direccion">
+    <h:form>
+            <div class="search row mb-3">
+                <div class="col">
+                    <p:inputText id="searchInput" value="#{direccionBean.searchText}" styleClass="form-control" />
+                    <p:commandButton value="Buscar" action="#{direccionBean.buscarDirecciones}" update="tablaDirecciones" styleClass="btn btn-primary" />
+                </div>
+                <div class="col-auto">
+                    <p:commandButton value="Crear Registro" action="#{direccionBean.redireccionarCrear()}" styleClass="btn btn-success">
+                    </p:commandButton>
+                </div>
+            </div>
+
+            <!-- Tabla con estilos de Bootstrap -->
+            <div class="table-responsive">
+                <p:dataTable value="#{direccionBean.direcciones}" var="direccion" tableStyle="font-family: sans-serif; border:none;padding:15px; background-color: #EAF7FC; background:#EAF7FC"
+                             id="tablaDirecciones" paginator="true" cellSeparator="true" draggableRows="false" rows="7" styleClass="table table-bordered">
+                    <p:column headerText="Nombre Lugar">
+                        #{direccion.nombreLugar}
+                    </p:column>
+                    <p:column headerText="Provincia">
+                        #{direccion.provincia}
+                    </p:column>
+                    <p:column headerText="Distrito">
+                        #{direccion.distrito}
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- Icono de actualización -->
+                                <p:commandLink title="Actualizar"
+                                             action="#{direccionBean.redireccionarEditar(direccion.idDireccion)}"
+                                             update="tablaDirecciones" process="@this" styleClass="btn btn-warning">
+                                    <i class='bx bxs-edit-alt' ></i>
+                                </p:commandLink>
+
+                            <!-- Botón de eliminación con cuadro de confirmación -->
+                            <p:commandLink title="Eliminar" rendered="#{direccionBean.sacerdoteTrue}" 
+                                             action="#{direccionBean.eliminarDireccion(direccion.idDireccion)}"
+                                             styleClass="btn btn-danger">
+                                <i class='bx bx-trash'></i>
+                                <p:confirm header="Confirmation" 
+                                           message="Are you sure?"
+                                           icon="pi pi-exclamation-triangle" />
+                            </p:commandLink>
+                        </div>
+                    </p:column> 
+                </p:dataTable>
+            </div>
+
             <!-- Cuadro de confirmación global -->
-            <p:confirmDialog global="true">
-                <p:commandButton value="Yes" type="button"
-                                 styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                <p:commandButton value="No" type="button"
-                                 styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-            </p:confirmDialog>   
+            <!-- Cuadro de confirmación global -->
+                        <p:confirmDialog global="true" styleClass="mi-estilo">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="bx bx-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="bx bx-x" />
+                        </p:confirmDialog>
         </h:form>
+            
+</div>
+
     </h:body>
 </html>
 

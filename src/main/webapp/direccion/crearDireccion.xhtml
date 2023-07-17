@@ -7,7 +7,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id="createForm">
             <h:outputLabel for="nombreLugar" value="Nombre Lugar:" />
             <p:inputText id="nombreLugar" value="#{direccionBean.nuevoNombreLugar}" required="true" />
             <h:message for="nombreLugar" />
@@ -20,9 +20,21 @@
             <p:inputText id="distrito" value="#{direccionBean.nuevoDistrito}" required="true" />
             <h:message for="distrito" />
 
-            <p:commandButton value="Guardar" action="#{direccionBean.crearDireccion()}" />
-            <p:commandButton type="reset" value="Reset" />
+            <p:commandButton value="Guardar" action="#{direccionBean.crearDireccion()}" update="createForm" />
         </h:form>
+        <script>
+            function limpiarFormulario() {
+                // Obtener los elementos del formulario
+                var nombreLugarInput = document.getElementById('createForm:nombreLugar');
+                var provinciaInput = document.getElementById('createForm:provincia');
+                var distritoInput = document.getElementById('createForm:distrito');
+
+                // Borrar los valores de los campos
+                nombreLugarInput.value = '';
+                provinciaInput.value = '';
+                distritoInput.value = '';
+            }
+        </script>
     </h:body>
 
 </html>

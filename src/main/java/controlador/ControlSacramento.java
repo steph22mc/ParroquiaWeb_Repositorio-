@@ -76,6 +76,11 @@ public class ControlSacramento {
         redirigir("/sacramento/defuncion.xhtml");
     }
     
+    public void redirigirAPrincipal() throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        redirigir("/pagina_inicio.xhtml");
+    }
+    
     public void redirigirAInicio() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         iframeSrc = externalContext.getRequestContextPath() + "/pagina_inicio.xhtml";

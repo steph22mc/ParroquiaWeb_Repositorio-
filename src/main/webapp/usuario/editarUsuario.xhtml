@@ -13,7 +13,7 @@
             <f:event listener="#{gestionUsuario.cargarUsuario()}" type="preRenderView" />
         </f:metadata>
         
-        <h:form>
+        <h:form id="editForm">
             <h:panelGrid id="grid" columns="3" cellpadding="7">
                 <h:outputLabel for="nombreUser" value="Nombre:" />
                 <p:inputText id="nombreUser" value="#{gestionUsuario.usuario.nombre}" required="true" />
@@ -56,8 +56,7 @@
             
             </h:panelGrid>
             
-            <p:commandButton value="Guardar" action="${gestionUsuario.crearUsuario()}" update="grid"/>
-            <p:commandButton type="reset" value="Reset" />
+            <p:commandButton value="Guardar" action="#{gestionUsuario.actualizarUsuario()}" update="editForm"/>
         </h:form>
     </h:body>
 </html>
